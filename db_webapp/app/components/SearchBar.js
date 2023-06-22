@@ -29,8 +29,8 @@ const SearchBar = () => {
           return;
         }
       
-        const encodedSearchQuery = encodeURI(searchQuery);
-        router.push(`/search?q=${encodedSearchQuery}`);
+        const encodedSearchQuery = encodeURI(searchQuery || "");
+        router.push(`api/search?q=${encodedSearchQuery}`);
       };
       
     return (
