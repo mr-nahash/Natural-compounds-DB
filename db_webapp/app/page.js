@@ -1,13 +1,12 @@
-import SearchBar from './components/SearchBar'
+import Molecules from "./components/MoleculeTable"
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col justify-between p-24">
       <div>
-      
+      <Molecules></Molecules>
       </div>
-
-        
     </main>
   )
 }
+
