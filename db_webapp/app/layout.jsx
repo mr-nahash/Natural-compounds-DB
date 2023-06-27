@@ -1,9 +1,9 @@
 "use client";
 import './globals.css'
 import { Inter } from 'next/font/google'
-import SearchBar from './components/SearchBar';
+import SearchBar from '../components/SearchBar';
 import { ThemeProvider } from "@material-tailwind/react";
-import NavBar from './components/NavBar';
+import NavBar from '../components/NavBar';
 import _default from '@material-tailwind/react/components/List/ListItem';
 import tailwindConfig from '@/tailwind.config';
 
