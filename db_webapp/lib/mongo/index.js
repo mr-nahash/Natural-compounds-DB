@@ -1,6 +1,9 @@
 import { MongoClient } from "mongodb"
 const URI = process.env.MONGODB_URI
-const options = {}
+const options = {
+   // useUnifiedTopology: true,
+    //useNewUrlParser: true,
+}
 
 if (!URI) throw new Error('Please add your Mongo URI to env')
 // sharing mongoclient globally
