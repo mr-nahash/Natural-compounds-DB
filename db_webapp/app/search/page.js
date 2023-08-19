@@ -4,6 +4,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Spinner from "./Spinner";
 import useSWR from "swr";
 import MoleculeInfo from "@components/MoleculePrisma";
+import SearchByLipinski from "@components/AdvanceSearch/byLipinkski";
+SearchByLipinski
 
 const fetchMolecules = async (url) => {
   const response = await fetch(url);
@@ -15,16 +17,15 @@ const fetchMolecules = async (url) => {
   return response.json();
 };
 
-const SearchPage = () => {
+const SearchPage = ({descriptorLimits}) => {
   const router = useRouter();
   const search = useSearchParams();
   const name = search.get("name");
   const kingdom = search.get("kingdom");
   const searchQuery = name || kingdom || "";
-
   const encodedName = encodeURI(name || "");
   const encodedKingdom = encodeURI(kingdom || "")
-  const query = `name=${encodedName}&kingdom=${encodedKingdom}`;
+  const query = `name=${encodedName}&kingdom=${encodedKingdom}&minHBA=${descriptorLimits.minHBA}&maxHBA=${descriptorLimits.maxHBA}&minLogP=${descriptorLimits.minLogP}&maxLogP=${descriptorLimits.maxLogP}&minMW=${descriptorLimits.minMW}&maxMW=${descriptorLimits.maxMW}&minHBD=${descriptorLimits.minHBD}&maxHBD=${descriptorLimits.maxHBD}&minRB=${descriptorLimits.minRB}&maxRB=${descriptorLimits.maxRB}&minTPSA=${descriptorLimits.minTPSA}&maxTPSA=${descriptorLimits.maxTPSA}`;
 
 
   const { data, isLoading } = useSWR(`/api/search?${query}`,fetchMolecules,

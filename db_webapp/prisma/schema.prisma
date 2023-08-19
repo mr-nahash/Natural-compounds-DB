@@ -8,18 +8,27 @@ datasource db {
 }
 
 type ActiveCompoundsActivity {
-  activity_1 String
-  activity_2 String
-  activity_3 String
-  activity_4 String
-  activity_5 String
-  activity_6 String
-  ic50_1     String
-  ic50_2     String
-  ic50_3     String
-  ic50_4     String
-  ic50_5     String
-  ic50_6     String
+  activity_1 String?
+  activity_2 String?
+  activity_3 String?
+  activity_4 String?
+  activity_5 String?
+  activity_6 String?
+  ic50_1     String?
+  ic50_2     String?
+  ic50_3     String?
+  ic50_4     String?
+  ic50_5     String?
+  ic50_6     String?
+}
+
+type ActiveCompoundsLipinski {
+  HBA  Int
+  HBD  Int
+  LogP Float
+  MW   Float
+  RB   Int
+  TPSA Float
 }
 
 type ActiveCompoundsLocation {
@@ -31,7 +40,7 @@ type ActiveCompoundsMetadata {
   doi       String
   journal   String
   reference String
-  year      String
+  year      Int
 }
 
 type ActiveCompoundsOrigin {
@@ -41,23 +50,24 @@ type ActiveCompoundsOrigin {
 }
 
 type ActiveCompoundsStructure {
-  idCode String
-}
-
-model active_compounds {
-  id           String                   @id @map("_id") @db.ObjectId
-  activity     ActiveCompoundsActivity
-  bioactivity  String
-  location     ActiveCompoundsLocation
-  metadata     ActiveCompoundsMetadata
-  moleculeId   String
-  name         String
-  origin       ActiveCompoundsOrigin
-  sameMolecule String
-  structure    ActiveCompoundsStructure
+  SMILES String
+  idCode String?
 }
 
 model SearchQuery {
-  id    String @id @default(cuid())
+  id    String @id @map("_id")
   query String
+}
+
+model active_compounds {
+  id          String                   @id @default(auto()) @map("_id") @db.ObjectId
+  activity    ActiveCompoundsActivity
+  bioactivity String?
+  lipinski    ActiveCompoundsLipinski
+  location    ActiveCompoundsLocation
+  metadata    ActiveCompoundsMetadata
+  moleculeId  String
+  name        String
+  origin      ActiveCompoundsOrigin
+  structure   ActiveCompoundsStructure
 }
