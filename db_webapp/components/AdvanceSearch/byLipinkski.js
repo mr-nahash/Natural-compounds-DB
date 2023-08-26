@@ -1,34 +1,48 @@
-
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { List, ListItem } from "@material-tailwind/react";
 import { Slider } from "@mui/material";
-
 import { Button } from "@material-tailwind/react";
 import {
-    CloudArrowUpIcon,
-    ArrowLongRightIcon,
-    ArrowPathIcon,
-    BookmarkIcon,
-  } from "@heroicons/react/24/outline";
+  CloudArrowUpIcon,
+  ArrowLongRightIcon,
+  ArrowPathIcon,
+  BookmarkIcon,
+} from "@heroicons/react/24/outline";
 
 const SearchByLipinski = () => {
-    
-   // Use the useRouter hook
-    const router = useRouter();
-    const [descriptorLimits, setDescriptorLimits] = useState({});
-    const [descriptorValues, setDescriptorValues] = useState({});
-    
-    const descriptors = [
-    { var: "MW", label: "Molecular Weight", marks:null},
-    { var: "LogP", label: "LogP", marks:null},
-    { var: "TPSA", label: "Topological Surface Area (TPSA)", marks:null},
-    { var: "HBA", label: "Hydrogen Bond Acceptors", marks:true},
-    { var: "HBD", label: "Hydrogen Bond Donors", marks:true},
-    { var: "RB", label: "Rotable Bonds", marks:true },
+  // Use the useRouter hook
+  const router = useRouter();
+  const [descriptorLimits, setDescriptorLimits] = useState({});
+  const [descriptorValues, setDescriptorValues] = useState({});
+
+  const descriptors = [
+    { var: "MW", label: "Molecular Weight", marks: null },
+    { var: "LogP", label: "LogP", marks: null },
+    { var: "TPSA", label: "Topological Surface Area (TPSA)", marks: null },
+    { var: "HBA", label: "Hydrogen Bond Acceptors", marks: true },
+    { var: "HBD", label: "Hydrogen Bond Donors", marks: true },
+    { var: "RB", label: "Rotable Bonds", marks: true },
   ];
 
-  // Fetch lipinsky descriptors by retriving information from the api/limits API
+  // Function to assign default values to untouched sliders
+  const assignDefaultValuesToUntouchedSliders = () => {
+    const defaultValues = {};
+    descriptors.forEach((descriptor) => {
+      if (!descriptorValues[descriptor.var]) {
+        defaultValues[descriptor.var] = [
+          descriptorLimits[descriptor.var]?.min || 0,
+          descriptorLimits[descriptor.var]?.max || 100,
+        ];
+      }
+    });
+    setDescriptorValues((prevValues) => ({
+      ...prevValues,
+      ...defaultValues,
+    }));
+  };
+
+  // Fetch lipinski descriptors by retrieving information from the api/limits API
   useEffect(() => {
     const fetchDescriptorLimits = async () => {
       try {
@@ -36,6 +50,7 @@ const SearchByLipinski = () => {
         if (response.ok) {
           const data = await response.json();
           setDescriptorLimits(data);
+          assignDefaultValuesToUntouchedSliders(); // Call this function when limits are available
         } else {
           console.error("Error fetching descriptor limits");
         }
@@ -51,34 +66,34 @@ const SearchByLipinski = () => {
   const updateURLWithSliderValues = () => {
     const queryParams = {};
     descriptors.forEach((descriptor) => {
-        if (descriptorValues[descriptor.var]) {
-          queryParams[`min${descriptor.var}`] = descriptorValues[descriptor.var][0];
-          queryParams[`max${descriptor.var}`] = descriptorValues[descriptor.var][1];
-        }
-      });
+      if (descriptorValues[descriptor.var]) {
+        queryParams[`min${descriptor.var}`] =
+          descriptorValues[descriptor.var][0];
+        queryParams[`max${descriptor.var}`] =
+          descriptorValues[descriptor.var][1];
+      }
+    });
     // Create a new query object with the updated slider values
-    
-  
+
     // Encode the query parameters
     const encodedQueryParams = new URLSearchParams(queryParams).toString();
     // Push the updated query to the URL
     router.push(`/search?${encodedQueryParams}`);
-    };
+  };
 
+  const handleSliderChange = (varName, values) => {
+    setDescriptorValues((prevValues) => ({
+      ...prevValues,
+      [varName]: values,
+    }));
+  };
 
-    const handleSliderChange = (varName, values) => {
-        setDescriptorValues((prevValues) => ({
-            ...prevValues,
-            [varName]: values,
-        }));
-    };
+  const handleSearch = () => {
+    // Call the function to update the URL with slider parameters
+    updateURLWithSliderValues();
 
-    const handleSearch = () => {
-        // Call the function to update the URL with slider parameters
-        updateURLWithSliderValues();
-        
-        // Add additional search logic here if needed
-        };
+    // Add additional search logic here if needed
+  };
 
   return (
     <List className="p-0">
@@ -98,7 +113,9 @@ const SearchByLipinski = () => {
                 }
                 min={descriptorLimits[descriptor.var]?.min}
                 max={descriptorLimits[descriptor.var]?.max}
-                onChange={(event, values) => handleSliderChange(descriptor.var, values)}
+                onChange={(event, values) =>
+                  handleSliderChange(descriptor.var, values)
+                }
               />
             </div>
             {descriptorLimits[descriptor.var] && (
@@ -110,9 +127,13 @@ const SearchByLipinski = () => {
           </div>
         </ListItem>
       ))}
-      <Button variant="text" className="flex items-center gap-2" onClick={handleSearch}>
-          Search <ArrowLongRightIcon strokeWidth={2} className="h-5 w-5" />
-        </Button>
+      <Button
+        variant="text"
+        className="flex items-center gap-2"
+        onClick={handleSearch}
+      >
+        Search <ArrowLongRightIcon strokeWidth={2} className="h-5 w-5" />
+      </Button>
     </List>
   );
 };
