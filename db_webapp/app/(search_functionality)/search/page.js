@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import Spinner from "./Spinner";
 import useSWR from "swr";
-import MoleculeInfo from "@components/MoleculePrisma";
+import MoleculeGallery from "@components/Pagination";
 
 const fetchMolecules = async (url) => {
   const response = await fetch(url);
@@ -47,13 +47,15 @@ const SearchPage = () => {
     revalidateOnFocus: false,
   });
 
+  const itemsPerPage = 20;
+
   if (!query) {
     router.push("/");
   }
 
   if (isLoading) {
     return (
-      <div>
+      <div className="self-center my-50" >
         loading...
         <Spinner />
       </div>
@@ -65,14 +67,15 @@ const SearchPage = () => {
   }
 
   return (
-    <div className="mx-50">
-      <span className="text-xl">
-        Showing results for:{" "}
-      <span className="font-semibold">{searchQuery}</span>
-      </span>
-      <span>
-        <MoleculeInfo molecules={data.molecules} />
-      </span>
+    <div>
+        <div className="right-0 ml-80 pl-80 top-8 mt-20">
+          <span className="text-xl">
+            Showing results for:{" "}
+            <span className="font-semibold">{searchQuery}</span>
+          </span>
+          <MoleculeGallery itemsPerPage={itemsPerPage} data={data.molecules} />
+        </div>
+
     </div>
   );
 };

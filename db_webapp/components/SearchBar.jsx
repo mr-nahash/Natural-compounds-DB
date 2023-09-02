@@ -55,7 +55,7 @@ const SearchBar = () => {
                 <input
                 type="text"
                 className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:pl-3"
-                placeholder="Search by SMILE or Name"
+                placeholder="Search by Name"
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 value={searchQuery || ""}

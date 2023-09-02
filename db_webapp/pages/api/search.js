@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         minTPSA,
         maxTPSA,
         minRB,
-        maxRB
+        maxRB,
       } = req.query;
 
       /**

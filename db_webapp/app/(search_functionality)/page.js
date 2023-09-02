@@ -1,5 +1,4 @@
-import prisma from "../prisma/client";
-import SidebarFilter from "@components/AdvanceSearch/SidebarFilter";
+import prisma from "../../prisma/client";
 import MoleculeGallery from "@components/Pagination";
 
 export default async function Home() {

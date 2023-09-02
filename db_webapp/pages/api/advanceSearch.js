@@ -1,11 +1,9 @@
 //Import the PrismaClient constructor from the @prisma/client node module
-import { Prisma, PrismaClient } from "@prisma/client";
-import { active_compounds } from "@prisma/client";
+import prisma from "@prisma/client";
 import cuid from 'cuid';
-
+const prisma = require(prisma)
 
 export default async function handler(req, res) {
-  const prisma=new PrismaClient()
   if (req.method === "GET") {
     try {
       const { q: query } = req.query;

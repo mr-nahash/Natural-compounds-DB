@@ -7,6 +7,7 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
+import Link from "next/link";
  
 export default function NavBar() {
   const [openNav, setOpenNav] = useState(false);
@@ -23,8 +24,18 @@ export default function NavBar() {
         color="blue-gray"
         className="p-1 font-normal"
       >
+        <Link href="/about" className="flex items-center">
+          About Us
+        </Link>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
         <a href="#" className="flex items-center">
-          Pages
+          API
         </a>
       </Typography>
       <Typography
@@ -34,45 +45,25 @@ export default function NavBar() {
         className="p-1 font-normal"
       >
         <a href="#" className="flex items-center">
-          Account
-        </a>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="#" className="flex items-center">
-          Blocks
-        </a>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="#" className="flex items-center">
-          Docs
+          Documentation
         </a>
       </Typography>
     </ul>
   );
  
   return (
-    <Navbar className="fixed top-0 mx-auto max-full py-2 px-4 lg:px-8 lg:py-4">
+    <Navbar className="flex top-0 mx-auto max-full py-2 px-4 lg:px-8 lg:py-4 bg-black">
       <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
         <Typography
-          as="a"
-          href="#"
           className="mr-4 cursor-pointer py-1.5 font-medium"
         >
-         BIOMX DB
+         <Link href="/">BIOMX DB</Link>
         </Typography>
         <div className="hidden lg:block">{navList}</div>
         <Button variant="gradient" size="sm" className="hidden lg:inline-block">
-          <span>BUTTON</span>
+          <Link href="/">
+          <span>Home</span>
+          </Link>
         </Button>
         <IconButton
           variant="text"
