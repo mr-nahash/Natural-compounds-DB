@@ -2,7 +2,7 @@
 import React from "react";
 import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import MoleculeInfo from "@components/MoleculePrisma";
+import MoleculeInfo from "@components/MolSummary";
 
 export default function MoleculeGallery({ itemsPerPage, data }) {
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -24,7 +24,7 @@ export default function MoleculeGallery({ itemsPerPage, data }) {
 
   return (
     <div>
-      <div className="grid grid-cols-2 place-items-center">
+      <div className="grid grid-cols-2 place-items-center p-2">
         <MoleculeInfo molecules={currentItems} />
       </div>
       <div className="flex justify-center mt-4 mb-20">

@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import Spinner from "./Spinner";
 import useSWR from "swr";
-import MoleculeGallery from "@components/Pagination";
+import MoleculeGallery from "@components/MolGallery";
 
 const fetchMolecules = async (url) => {
   const response = await fetch(url);

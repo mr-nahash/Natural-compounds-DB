@@ -20,9 +20,7 @@ export default function RootLayout({ children }) {
       <body>
         <NavBar/> 
         <SimpleFooter/>
-        <div className="flex gap-5 items-center p-6">
-          <div className="flex flex-col items-center w-full">{children}</div>
-        </div>
+        <div className="flex flex-col items-center w-full">{children}</div>
       </body>
       
     </html>

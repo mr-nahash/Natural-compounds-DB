@@ -1,38 +1,117 @@
-import { Carousel } from "@material-tailwind/react";
+"use client";
+import { Carousel, Typography, Button } from "@material-tailwind/react";
  
-export default function Gallery() {
+export function CarouselWithText() {
   return (
-    <Carousel
-      className="rounded-xl flex"
-      navigation={({ setActiveIndex, activeIndex, length }) => (
-        <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
-          {new Array(length).fill("").map((_, i) => (
-            <span
-              key={i}
-              className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                activeIndex === i ? "bg-white w-8" : "bg-white/50 w-4"
-              }`}
-              onClick={() => setActiveIndex(i)}
-            />
-          ))}
+    <Carousel className="rounded-xl">
+      <div className="relative h-full w-full">
+        <img
+          src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
+          alt="image 1"
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 grid h-full w-full place-items-center bg-black/75">
+          <div className="w-3/4 text-center md:w-2/4">
+            <Typography
+              variant="h1"
+              color="white"
+              className="mb-4 text-3xl md:text-4xl lg:text-5xl"
+            >
+              The Beauty of Nature
+            </Typography>
+            <Typography
+              variant="lead"
+              color="white"
+              className="mb-12 opacity-80"
+            >
+              It is not so much for its beauty that the forest makes a claim
+              upon men&apos;s hearts, as for that subtle something, that quality
+              of air that emanation from old trees, that so wonderfully changes
+              and renews a weary spirit.
+            </Typography>
+            <div className="flex justify-center gap-2">
+              <Button size="lg" color="white">
+                Explore
+              </Button>
+              <Button size="lg" color="white" variant="text">
+                Gallery
+              </Button>
+            </div>
+          </div>
         </div>
-      )}
-    >
-      <img
-        src="https://images.pexels.com/photos/361186/forest-mushrooms-nature-autumn-361186.jpeg?cs=srgb&dl=pexels-pixabay-361186.jpg&fm=jpg"
-        alt="image 1"
-        className="h-full w-full object-cover"
-      />
-      <img
-        src="https://c4.wallpaperflare.com/wallpaper/790/930/534/cenote-ik-kil-yucatan-peninsula-lake-cenotes-wallpaper-preview.jpg"
-        alt="image 2"
-        className="h-full w-full object-cover"
-      />
-      <img
-        src='https://tvazteca.brightspotcdn.com/dims4/default/5b8f52b/2147483647/strip/true/crop/870x480+0+0/resize/968x534!/format/jpg/quality/80/?url=http%3A%2F%2Ftv-azteca-brightspot.s3.amazonaws.com%2F5f%2F25%2Fa53c82fb6a6d7c07e7b2728a8d2c%2F0'
-        alt="image 3"
-        className="h-full w-full object-cover"
-      />
+      </div>
+      <div className="relative h-full w-full">
+        <img
+          src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
+          alt="image 2"
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 grid h-full w-full items-center bg-black/75">
+          <div className="w-3/4 pl-12 md:w-2/4 md:pl-20 lg:pl-32">
+            <Typography
+              variant="h1"
+              color="white"
+              className="mb-4 text-3xl md:text-4xl lg:text-5xl"
+            >
+              The Beauty of Nature
+            </Typography>
+            <Typography
+              variant="lead"
+              color="white"
+              className="mb-12 opacity-80"
+            >
+              It is not so much for its beauty that the forest makes a claim
+              upon men&apos;s hearts, as for that subtle something, that quality
+              of air that emanation from old trees, that so wonderfully changes
+              and renews a weary spirit.
+            </Typography>
+            <div className="flex gap-2">
+              <Button size="lg" color="white">
+                Explore
+              </Button>
+              <Button size="lg" color="white" variant="text">
+                Gallery
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="relative h-full w-full">
+        <img
+          src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
+          alt="image 3"
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 grid h-full w-full items-end bg-black/75">
+          <div className="w-3/4 pl-12 pb-12 md:w-2/4 md:pl-20 md:pb-20 lg:pl-32 lg:pb-32">
+            <Typography
+              variant="h1"
+              color="white"
+              className="mb-4 text-3xl md:text-4xl lg:text-5xl"
+            >
+              The Beauty of Nature
+            </Typography>
+            <Typography
+              variant="lead"
+              color="white"
+              className="mb-12 opacity-80"
+            >
+              It is not so much for its beauty that the forest makes a claim
+              upon men&apos;s hearts, as for that subtle something, that quality
+              of air that emanation from old trees, that so wonderfully changes
+              and renews a weary spirit.
+            </Typography>
+            <div className="flex gap-2">
+              <Button size="lg" color="white">
+                Explore
+              </Button>
+              <Button size="lg" color="white" variant="text">
+                Gallery
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
     </Carousel>
   );
 }
