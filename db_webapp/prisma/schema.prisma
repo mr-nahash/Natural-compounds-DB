@@ -22,6 +22,10 @@ type ActiveCompoundsActivity {
   ic50_6     String?
 }
 
+type ActiveCompoundsFingerprint {
+  MACCS String
+}
+
 type ActiveCompoundsLipinski {
   HBA  Int
   HBD  Int
@@ -60,9 +64,10 @@ model SearchQuery {
 }
 
 model active_compounds {
-  id          String                   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String                     @id @default(auto()) @map("_id") @db.ObjectId
   activity    ActiveCompoundsActivity
   bioactivity String?
+  fingerprint ActiveCompoundsFingerprint
   lipinski    ActiveCompoundsLipinski
   location    ActiveCompoundsLocation
   metadata    ActiveCompoundsMetadata

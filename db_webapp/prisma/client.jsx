@@ -1,15 +1,24 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient();
-
-if (!global.prisma) {
-  global.prisma = prisma;
+const prismaClientSingleton = () => {
+  return new PrismaClient().$extends({
+    result: {
+      user: {
+        fullName: {
+          needs: { firstName: true, lastName: true },
+          compute(user) {
+            return `${user.firstName} ${user.lastName}`
+          },
+        },
+      },
+    },
+  })
 }
 
-const client = global.prisma;
+const globalForPrisma = prismaClientSingleton
 
-if (process.env.NODE_ENV !== "production") {
-  global.prisma = client;
-}
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
 
-export default prisma;
+export default prisma
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma

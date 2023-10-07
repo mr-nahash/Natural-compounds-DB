@@ -22,6 +22,10 @@ export default function RootLayout({ children }) {
         <SimpleFooter/>
         <div className="flex flex-col items-center w-full">{children}</div>
       </body>
+      <script type="text/javascript" src="https://unpkg.com/smiles-drawer@2.0.1/dist/smiles-drawer.min.js"></script>
+        <script>
+          SmiDrawer.apply();
+        </script>
       
     </html>
   )

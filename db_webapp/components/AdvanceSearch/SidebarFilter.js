@@ -26,7 +26,6 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import Drawer from "../MoleculeEdit";
 import Link from "next/link";
 
 

@@ -4,6 +4,7 @@ import MoleculeRecord from "@components/MolRecord";
 
 export default async function Page({ params }) {
   const prisma = new PrismaClient()
+  
   const molecule = await prisma.active_compounds.findUnique({
     where: {
       id: params.id,

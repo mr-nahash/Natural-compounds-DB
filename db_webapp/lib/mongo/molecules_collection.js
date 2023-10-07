@@ -31,7 +31,6 @@ export async function getMolecules (){
         if (!molecules) await init()
         const result= await molecules
             .find({})
-            .limit(50)
             .map(user => ({ ...user, _id: user._id.toString() }))
             .toArray()
         console.log('Mongo Documents retrieved Successfully')
