@@ -91,26 +91,27 @@ export default function SidebarFilter() {
           </AccordionBody>
         </Accordion>
         {/* Search by Drawer */}
-        <Accordion
+        <Link href="/draw">
+          <Accordion
           open={open === 3}
           icon={
             <ChevronRightIcon
               strokeWidth={2.5}
               className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
             />
-          }
-        >
-          <ListItem className="p-0" selected={open === 1}>
+            }
+          >
+
             <AccordionHeader className="border-b-0 p-3">
               <ListItemPrefix>
                 <PencilSquareIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <Typography color="blue-gray" className="mr-auto font-normal" >
-              <Link href='/draw'>Draw Molecule</Link>
+              <Typography color="blue-gray" className="mr-auto font-normal">
+                Draw molecule
               </Typography>
-            </AccordionHeader>  
-          </ListItem>
-        </Accordion>
+            </AccordionHeader>
+          </Accordion>
+        </Link>
       </List>
     </Card>
   );
