@@ -24,7 +24,7 @@ export default function MoleculeGallery({ itemsPerPage, data }) {
 
   return (
     <div>
-      <div className="grid grid-cols-2 place-items-center p-2">
+      <div className="grid grid-cols-3 place-items-center p-2">
         <MoleculeInfo molecules={currentItems} />
       </div>
       <div className="flex justify-center mt-4 mb-20">

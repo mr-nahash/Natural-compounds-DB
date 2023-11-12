@@ -91,8 +91,6 @@ const SearchByLipinski = () => {
   const handleSearch = () => {
     // Call the function to update the URL with slider parameters
     updateURLWithSliderValues();
-
-    // Add additional search logic here if needed
   };
 
   return (

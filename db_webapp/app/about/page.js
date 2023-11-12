@@ -5,7 +5,6 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-import Gallery from "@components/CarouselOption2";
 
 export default function About() {
   const [open, setOpen] = React.useState(1);
@@ -14,11 +13,11 @@ export default function About() {
  
   return (
     <>
-      
       <div className="mx-10">
-        <Gallery/>  
+        
       </div>
-      <div className="">
+      
+      <div >
         <Accordion open={open === 1}>
           <AccordionHeader onClick={() => handleOpen(1)}>What is Material Tailwind?</AccordionHeader>
           <AccordionBody>
