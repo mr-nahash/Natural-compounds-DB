@@ -15,17 +15,15 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <title>BIOMX DB</title>
-        {/* Link your CSS file here */}
-        <link rel="stylesheet" href="path/to/your/styles.css" />
       </head>
       <body className="flex flex-col min-h-screen">
         <div className="flex-shrink-0">
           <NavBar />
         </div>
-        <main className="flex-grow flex flex-col items-center w-full">
+        <div className="flex-grow flex flex-col items-center max-w-full">
           {/* Your main content goes here */}
           {children}
-        </main>
+        </div>
         <div className="flex-shrink-0">
           <SimpleFooter />
         </div>

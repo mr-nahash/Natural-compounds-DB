@@ -1,5 +1,7 @@
 import Link from "next/link";
 import React, { useEffect } from "react";
+import "./styles/mol_records.css"
+
 
 const MoleculeInfo = ({molecules}) => {
   useEffect(() => {
@@ -68,10 +70,14 @@ const MoleculeInfo = ({molecules}) => {
                     />
                   <div className="gap-2">
                     <div className="text-xl font-semibold">{molecule.name}</div>
-                    <span className="text-lg font-light">
-                      Origin: {molecule.origin.kingdom}, {molecule.origin.genus}, {molecule.origin.species}
-                    </span>
-                    {/* Add other molecule properties as needed */}
+                    <p></p>
+                    <div className="Molecule-details-label">Bioactivity:</div>
+                    <div className="Molecule-details-value indent-5">{molecule.bioactivity||"undiscovered"}</div>
+
+                    <div className="Molecule-details-label">Origin: </div>
+                    <div className="Molecule-details-value indent-5">{molecule.origin.kingdom}</div>
+                    <div className="Molecule-details-value indent-5">{molecule.origin.species}</div>
+   
                   </div>
                 </div>
               </Link>

@@ -24,6 +24,7 @@ import {
   MapPinIcon,
   PencilIcon,
   PencilSquareIcon,
+  ExclamationTriangleIcon
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import Drawer from "../MoleculeEdit";
@@ -42,7 +43,7 @@ export default function SidebarFilter() {
 
   return (
     <Card className="relative flex pb-4 w-full max-w-[40rem] p-4 shadow-xl shadow-blue-gray-900/5 overflow-y-auto">
-      <div className="mb-2 p-4">
+      <div className="mb-2 p-4 self-center">
         <Typography variant="h5" color="blue-gray">
           Advance Search
         </Typography>
@@ -86,7 +87,7 @@ export default function SidebarFilter() {
             )}
           </AccordionBody>
         </Accordion>
-        {/* Search by chemical Descriptors functionality */}
+        {/* Search by Bioactivity functionality */}
         <Accordion
           open={open === 2}
           icon={
@@ -98,21 +99,55 @@ export default function SidebarFilter() {
             />
           }
         >
-          <ListItem className="p-0" selected={open === 3}>
+          <ListItem className="p-0" selected={open === 2}>
             <AccordionHeader
               onClick={() => handleOpen(2)}
+              className="border-b-0 p-3"
+            >
+              <ListItemPrefix>
+                <ExclamationTriangleIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="mr-auto font-normal">
+                Bioactivity
+              </Typography>
+            </AccordionHeader>
+          </ListItem>
+          <AccordionBody className="py-1">
+            {open === 2 && (
+              <div className="overflow-y-auto max-h-[200px]">
+                <p>Search by Bioactivity</p>
+                <SearchByOrigin></SearchByOrigin>
+              </div>
+            )}
+          </AccordionBody>
+        </Accordion>
+        {/* Search by chemical Descriptors functionality */}
+        <Accordion
+          open={open === 3}
+          icon={
+            <ChevronDownIcon
+              strokeWidth={2.5}
+              className={`mx-auto h-4 w-4 transition-transform ${
+                open === 3 ? "rotate-180" : ""
+              }`}
+            />
+          }
+        >
+          <ListItem className="p-0" selected={open === 3}>
+            <AccordionHeader
+              onClick={() => handleOpen(3)}
               className="border-b-0 p-3"
             >
               <ListItemPrefix>
                 <ChartBarIcon className="h-5 w-5" />
               </ListItemPrefix>
               <Typography color="blue-gray" className="mr-auto font-normal">
-                Chemical Descriptor
+                Chemical Descriptors
               </Typography>
             </AccordionHeader>
           </ListItem>
           <AccordionBody className="py-0">
-            {open === 2 && (
+            {open === 3 && (
               <div className="overflow-y-auto h-auto">
                 <SearchByLipinski></SearchByLipinski>
               </div>
@@ -121,15 +156,17 @@ export default function SidebarFilter() {
         </Accordion>
         {/* Search by Drawer */}
         <Accordion
-          open={open === 3}
+          open={open === 4}
           icon={
             <ChevronRightIcon
               strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
+              className={`mx-auto h-4 w-4 transition-transform ${open === 4 ? "rotate-180" : ""}`}
             />
           }
         >
-          <ListItem className="p-0" selected={open === 1}>
+        
+          <ListItem className="p-0" selected={open === 4}>
+          <Link href="/draw">
             <AccordionHeader className="border-b-0 p-3">
               <ListItemPrefix>
                 <PencilSquareIcon className="h-5 w-5" />
@@ -138,7 +175,9 @@ export default function SidebarFilter() {
                 Similarity Search
               </Typography>
             </AccordionHeader>  
+          </Link>
           </ListItem>
+          
         </Accordion>
       </List>
     </Card>

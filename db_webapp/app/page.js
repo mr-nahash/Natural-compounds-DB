@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import SidebarFilter from "@components/AdvanceSearch/SidebarFilter";
 
 export default async function Home() {
-  const itemsPerPage = 20;
+  const itemsPerPage = 10;
   
   // Initialize a new instance of PrismaClient
   const prisma = new PrismaClient();
@@ -15,7 +15,7 @@ export default async function Home() {
     
     return (
       <div>
-        <div className="grid grid-rows-2 p-3" style={{ gridTemplateRows: '400px 1fr' }}>
+        <div className="grid grid-rows-2 p-3" style={{ gridTemplateRows: '350px 1fr' }}>
         <div className="flex">
           <HomeCarousel></HomeCarousel>
         </div>

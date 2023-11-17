@@ -77,34 +77,43 @@ const MoleculeRecord = ({ molecule }) => {
         
 
         <div className="Molecule-info-row">
-          <div className="Molecule-info-label">Chemical Formula</div>
-          <div className="Molecule-info-value"></div>
+          <div className="Molecule-info-label">Common Name</div>
+          <div className="Molecule-info-value">{molecule.name}</div>
         </div>
-        <div className="gap-2">
-          <div className="flex text-xl font-semibold">{molecule.name}</div>
-          <span className="text-lg font-light">ID: {molecule.moleculeId}</span>
-          <span className="text-lg font-light">
-            Origin: {molecule.origin.kingdom}, {molecule.origin.genus}, {molecule.origin.species}
-          </span>
-          <span className="text-lg font-light">
-            First Literature Report: {molecule.metadata.journal}, {molecule.metadata.reference}, {molecule.metadata.year}, {molecule.metadata.doi}
-          </span>
-          <span className="text-lg font-light">
-            Location of Extraction: {molecule.location.state}, {molecule.location.site}
-          </span>
-          <span className="text-lg font-light">
-            Known Bioactivities: {molecule.bioactivity && molecule.bioactivity.activity_1 !== null ? molecule.bioactivity.activity_1 : ''}
-          </span>
+        <div className="Molecule-info-row">
+          <div className="Molecule-info-label">Chemical Formula</div>
+          <div className="Molecule-info-value">CxHxOx</div>
+        </div>
+        <div className="Molecule-info-row">
+          <div className="Molecule-info-label">Molecular Weight</div>
+          <div className="Molecule-info-value">{molecule.lipinski.MW}</div>
+        </div>
+        <div className="Molecule-info-row">
+          <div className="Molecule-info-label">HBD</div>
+          <div className="Molecule-info-value">{molecule.lipinski.HBD}</div>
+        </div>
+        <div className="Molecule-info-row">
+          <div className="Molecule-info-label">HBA</div>
+          <div className="Molecule-info-value">{molecule.lipinski.HBA}</div>
+        </div>
+        <div className="Molecule-info-row">
+          <div className="Molecule-info-label">RB</div>
+          <div className="Molecule-info-value">{molecule.lipinski.RB}</div>
+        </div>
+        <div className="Molecule-info-row">
+          <div className="Molecule-info-label">TPSA</div>
+          <div className="Molecule-info-value">{molecule.lipinski.TPSA}</div>
         </div>
       </div>
+
       <div className="Molecule-details">
+      <div className="Molecule-details-row">
+          <div className="Molecule-details-label">Common Name</div>
+          <div className="Molecule-details-value">{molecule.name}</div>
+        </div>
         <div className="Molecule-details-row">
           <div className="Molecule-details-label">BIOFACQUIM ID</div>
           <div className="Molecule-details-value">{molecule.moleculeId}</div>
-        </div>
-        <div className="Molecule-details-row">
-          <div className="Molecule-details-label">Common Name</div>
-          <div className="Molecule-details-value">{molecule.name}</div>
         </div>
         <div className="Molecule-details-row">
           <div className="Molecule-details-label">Isomeric SMILES
@@ -119,7 +128,9 @@ const MoleculeRecord = ({ molecule }) => {
               )}
               </DocumentDuplicateIcon>    
           </div>
-          <div className="Molecule-details-value">{molecule.structure.SMILES}</div>
+            <div className="Molecule-details-value">
+            {molecule.structure.SMILES}
+            </div>
         </div>
         <div className="Molecule-details-row">
           <div className="Molecule-details-label">Origin</div>
@@ -169,15 +180,11 @@ const MoleculeRecord = ({ molecule }) => {
           <div className="Molecule-details-label">Bioactivity Reported</div>
           <div className="Molecule-details-value">{molecule.bioactivity}</div>
         </div>
-        <div className="Molecule-details-row">
-          <div className="Molecule-details-label">Assay Activities</div>
-          <div className="Molecule-details-value"></div>
-        </div>
       </div>
     </div> 
+
       
           );
         };
-        
         
         export default MoleculeRecord;

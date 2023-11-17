@@ -27,26 +27,25 @@ export function HomeCarousel() {
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 grid h-full w-1/2 place-items-center bg-black/75">
-          <div className="w-3/4 text-center md:w-2/4">
+          <div className="w-3/4 text-center md:w-2/4 text-slate-50 pt-5">
             <Typography
-              variant="h1"
+              variant="4"
               color="white"
-              className="mb-4 text-3xl md:text-4xl lg:text-5xl"
+              className="mb-4 text-3xl md:text-3xl lg:text-5xl"
             >
-              Welcome!
+              EXPLORE THE MEXICAN BIODIVERSITY
             </Typography>
             <Typography
               variant="lead"
               color="white"
               className="mb-12 opacity-80"
             >
-              Welcome to BIOMX DB, the biggest curated Mexican Natural Products Database &apos;s hearts, as for that subtle something, that quality
-              of air that emanation from old trees, that so wonderfully changes
-              and renews a weary spirit.
+              Welcome to BIOMX DB, the biggest curated Mexican Natural Products Database. Composed by 605 compounds coming from 
+              plants, fungi and even animals.
             </Typography>
-            <div className="flex justify-center gap-2">
-              <Button size="lg" color="white">
-                Explore
+            <div className=" justify-center gap-2">
+              <Button size="lg" color="white" href="/about">
+                About the proyect
               </Button>
 
             </div>

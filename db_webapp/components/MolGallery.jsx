@@ -24,7 +24,7 @@ export default function MoleculeGallery({ itemsPerPage, data }) {
 
   return (
     <div>
-      <div className="grid grid-cols-3 place-items-center p-2">
+      <div className="grid grid-cols-2 place-items-center p-2">
         <MoleculeInfo molecules={currentItems} />
       </div>
       <div className="flex justify-center mt-4 mb-20">
@@ -35,6 +35,7 @@ export default function MoleculeGallery({ itemsPerPage, data }) {
             color="blue-gray"
             onClick={prev}
             disabled={active === 1}
+            className="justify-center"
           >
             <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />
           </IconButton>
@@ -48,6 +49,7 @@ export default function MoleculeGallery({ itemsPerPage, data }) {
             color="blue-gray"
             onClick={next}
             disabled={active === totalPages}
+            className="justify-center"
           >
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </IconButton>
