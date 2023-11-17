@@ -12,16 +12,27 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    // const Theme = { }
     <html lang="en">
       <head>
-        <title> BIOMX DB </title>
-      </head> 
-      <body>
-        <NavBar/> 
-        <SimpleFooter/>
-        <div className="flex flex-col items-center w-full">{children}</div>
+        <title>BIOMX DB</title>
+      </head>
+      <body className="flex flex-col min-h-screen">
+        <div className="flex-shrink-0">
+          <NavBar />
+        </div>
+        <div className="flex-grow flex flex-col items-center max-w-full">
+          {/* Your main content goes here */}
+          {children}
+        </div>
+        <div className="flex-shrink-0">
+          <SimpleFooter />
+        </div>
+        {/* Include your scripts here */}
+        <script type="text/javascript" src="https://unpkg.com/smiles-drawer@2.0.1/dist/smiles-drawer.min.js"></script>
+        <script>
+          SmiDrawer.apply();
+        </script>
       </body>
     </html>
-  )
-}
+  );
+};

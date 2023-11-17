@@ -1,9 +1,16 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import {
+  ArrowDownOnSquareStackIcon,
+  DocumentDuplicateIcon
+} from "@heroicons/react/24/solid";
+import "./styles/mol_records.css"
 
 const MoleculeRecord = ({ molecule }) => {
   const [csvData, setCsvData] = useState(null);
+  const [showLegend, setShowLegend] = useState(false);
+  
 
   useEffect(() => {
     if (window.SmiDrawer) {
@@ -16,6 +23,7 @@ const MoleculeRecord = ({ molecule }) => {
       return;
     }
 
+  
     const {
       name,
       origin: { kingdom, genus, species },
@@ -48,53 +56,79 @@ const MoleculeRecord = ({ molecule }) => {
   return (
     <div className="MoleculeRecord-container">
       <div className="Molecule-information">
+          <ArrowDownOnSquareStackIcon
+              className="h-7 w-7 text-black float-right"
+              onClick={() => { generateCSV(); downloadCSV(); }}
+              onMouseEnter={() => setShowLegend(true)}
+              onMouseLeave={() => setShowLegend(false)}
+              >
+              {showLegend && (
+              <div className="legend">Download the molecule data in CSV format.</div>
+            )}
+            </ArrowDownOnSquareStackIcon>        
         <img
           className="Molecule-image"
           data-smiles={molecule.structure.SMILES}
           data-smiles-options={JSON.stringify({ width: 500, height: 500 })}
           alt={`Molecule ${molecule.moleculeId}`}
         />
+        
+
+        <div className="Molecule-info-row">
+          <div className="Molecule-info-label">Common Name</div>
+          <div className="Molecule-info-value">{molecule.name}</div>
+        </div>
         <div className="Molecule-info-row">
           <div className="Molecule-info-label">Chemical Formula</div>
-          <div className="Molecule-info-value"></div>
+          <div className="Molecule-info-value">CxHxOx</div>
         </div>
         <div className="Molecule-info-row">
           <div className="Molecule-info-label">Molecular Weight</div>
           <div className="Molecule-info-value">{molecule.lipinski.MW}</div>
         </div>
         <div className="Molecule-info-row">
-          <div className="Molecule-info-label">LogP</div>
-          <div className="Molecule-info-value">{molecule.lipinski.LogP}</div>
-        </div>
-        <div className="Molecule-info-row">
-          <div className="Molecule-info-label">Topological Polar Surface Area (TPSA)</div>
-          <div className="Molecule-info-value">{molecule.lipinski.TPSA}</div>
-        </div>
-        <div className="Molecule-info-row">
-          <div className="Molecule-info-label">Hydrogen Bond Donors (HBD)</div>
+          <div className="Molecule-info-label">HBD</div>
           <div className="Molecule-info-value">{molecule.lipinski.HBD}</div>
         </div>
         <div className="Molecule-info-row">
-          <div className="Molecule-info-label">Hydrogen Bond Acceptors (HBA)</div>
+          <div className="Molecule-info-label">HBA</div>
           <div className="Molecule-info-value">{molecule.lipinski.HBA}</div>
         </div>
         <div className="Molecule-info-row">
-          <div className="Molecule-info-label">Rotable Bonds (RB)</div>
+          <div className="Molecule-info-label">RB</div>
           <div className="Molecule-info-value">{molecule.lipinski.RB}</div>
         </div>
+        <div className="Molecule-info-row">
+          <div className="Molecule-info-label">TPSA</div>
+          <div className="Molecule-info-value">{molecule.lipinski.TPSA}</div>
+        </div>
       </div>
+
       <div className="Molecule-details">
+      <div className="Molecule-details-row">
+          <div className="Molecule-details-label">Common Name</div>
+          <div className="Molecule-details-value">{molecule.name}</div>
+        </div>
         <div className="Molecule-details-row">
           <div className="Molecule-details-label">BIOFACQUIM ID</div>
           <div className="Molecule-details-value">{molecule.moleculeId}</div>
         </div>
         <div className="Molecule-details-row">
-          <div className="Molecule-details-label">Common Name</div>
-          <div className="Molecule-details-value">{molecule.name}</div>
-        </div>
-        <div className="Molecule-details-row">
-          <div className="Molecule-details-label">Isomeric SMILES</div>
-          <div className="Molecule-details-value">SMILES</div>
+          <div className="Molecule-details-label">Isomeric SMILES
+            <DocumentDuplicateIcon
+                className="h-7 w-7 float-right"
+                onClick={() => navigator.clipboard.writeText(molecule.structure.SMILES)}
+                onMouseEnter={() => setShowLegend(true)}
+                onMouseLeave={() => setShowLegend(false)}
+                >
+                {showLegend && (
+                <div className="legend">copy to clipboard</div>
+              )}
+              </DocumentDuplicateIcon>    
+          </div>
+            <div className="Molecule-details-value">
+            {molecule.structure.SMILES}
+            </div>
         </div>
         <div className="Molecule-details-row">
           <div className="Molecule-details-label">Origin</div>
@@ -144,17 +178,11 @@ const MoleculeRecord = ({ molecule }) => {
           <div className="Molecule-details-label">Bioactivity Reported</div>
           <div className="Molecule-details-value">{molecule.bioactivity}</div>
         </div>
-        <div className="Molecule-details-row">
-          <div className="Molecule-details-label">Assay Activities</div>
-          <div className="Molecule-details-value"></div>
-        </div>
       </div>
-      
-      <button onClick={() => { generateCSV(); downloadCSV(); }}>Download Record (.CSV)</button>
-      </div> 
+    </div> 
+
       
           );
         };
-        
         
         export default MoleculeRecord;

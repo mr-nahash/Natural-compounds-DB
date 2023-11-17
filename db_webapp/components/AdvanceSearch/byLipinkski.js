@@ -91,8 +91,6 @@ const SearchByLipinski = () => {
   const handleSearch = () => {
     // Call the function to update the URL with slider parameters
     updateURLWithSliderValues();
-
-    // Add additional search logic here if needed
   };
 
   return (
@@ -103,16 +101,19 @@ const SearchByLipinski = () => {
             <p>{descriptor.label}</p>
             <div className="slider-container">
               <Slider
-                mark={descriptor.marks}
-                valueLabelDisplay="on"
+                min={descriptorLimits[descriptor.var]?.min}
+                max={descriptorLimits[descriptor.var]?.max}
+                defaultValue={[descriptorLimits[descriptor.var]?.min, descriptorLimits[descriptor.var]?.max]}
+                
+                valueLabelDisplay="auto"
+                
                 value={
                   descriptorValues[descriptor.var] || [
                     descriptorLimits[descriptor.var]?.min || 0,
                     descriptorLimits[descriptor.var]?.max || 100,
                   ]
                 }
-                min={descriptorLimits[descriptor.var]?.min}
-                max={descriptorLimits[descriptor.var]?.max}
+                
                 onChange={(event, values) =>
                   handleSliderChange(descriptor.var, values)
                 }
