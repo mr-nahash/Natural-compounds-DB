@@ -1,9 +1,8 @@
 //Import the PrismaClient constructor from the @prisma/client node module
-import { PrismaClient } from "@prisma/client";
+import prisma from 'prisma/client';
 import cuid from 'cuid';
 
 export default async function handler(req, res) {
-  const prisma = new PrismaClient();
 
   if (req.method === "GET") {
     try {
@@ -125,7 +124,9 @@ export default async function handler(req, res) {
     } catch (error) {
       console.log(error);
       res.status(500).end();
-    } finally {
+    } 
+    finally {
+      // Close the PrismaClient instance to release resources
       await prisma.$disconnect();
     }
   }

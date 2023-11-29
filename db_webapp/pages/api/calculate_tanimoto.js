@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from 'prisma/client';
 import fs from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
@@ -8,10 +8,8 @@ export default async function handler(req, res) {
     try {
       const { smiles } = req.body;
 
-      // Initialize a new instance of PrismaClient
-      const prisma = new PrismaClient();
-
       // Fetch database fingerprints from the Prisma client
+      
       const databaseFingerprints = await prisma.active_compounds.findMany({
         select: {
           id: true,
@@ -22,9 +20,6 @@ export default async function handler(req, res) {
           },
         },
       });
-
-      // Close the Prisma client instance to release resources
-      await prisma.$disconnect();
 
       // Create a temporary file to store the JSON data
       const tempFilePath = path.join(__dirname, 'temp.json');
@@ -94,6 +89,10 @@ export default async function handler(req, res) {
       await processPromise;
     } catch (error) {
       res.status(500).json({ error: error.message });
+    }
+    finally {
+      // Close the PrismaClient instance to release resources
+      await prisma.$disconnect();
     }
   } else {
     res.status(405).end(); // Method Not Allowed

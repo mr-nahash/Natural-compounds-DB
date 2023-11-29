@@ -3,6 +3,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Spinner from "./Spinner";
 import useSWR from "swr";
 import MoleculeGallery from "@components/MolGallery";
+import SidebarFilter from "@components/AdvanceSearch/SidebarFilter";
+
 
 const fetchMolecules = async (url) => {
   const response = await fetch(url);
@@ -67,16 +69,23 @@ const SearchPage = () => {
   }
 
   return (
-    <div>
-        <div className="right-0 ml-80 pl-80 top-8 mt-20">
-          <span className="text-xl">
-            Showing results for:{" "}
-            <span className="font-semibold">{searchQuery}</span>
-          </span>
-          <MoleculeGallery itemsPerPage={itemsPerPage} data={data.molecules} />
-        </div>
 
-    </div>
+    <div>
+      <div className="right-0 ml-80 pl-80 top-8 mt-20">
+        <span className="text-xl">
+          Showing results for:{" "}
+          <span className="font-semibold">{searchQuery}</span>
+        </span>
+          
+        </div>
+          <div className="grid justify-center grid-cols-2" style={{ gridTemplateColumns: '600px 1fr' }}>
+            <div className="justify-center py-6 pl-8">
+              <SidebarFilter></SidebarFilter>
+            </div>
+            <MoleculeGallery itemsPerPage={itemsPerPage} data={data.molecules} />
+          </div>
+      </div>  
+        
   );
 };
 

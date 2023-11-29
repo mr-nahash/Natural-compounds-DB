@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
+import prisma from "prisma/client";
 export default async function handler(req, res) {
     if (req.method !== 'GET') {
         return res.status(405).end(); // Method Not Allowed
@@ -18,7 +17,6 @@ export default async function handler(req, res) {
 
 // Define your function to calculate descriptor limits from Prisma models
 async function calculateDescriptorLimits() {
-    const prisma=new PrismaClient()
     const descriptors = [
     'HBA', 'HBD', 'LogP', 'MW', 'RB', 'TPSA'
   ];

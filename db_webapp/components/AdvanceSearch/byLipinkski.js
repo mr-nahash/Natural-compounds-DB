@@ -139,4 +139,32 @@ const SearchByLipinski = () => {
   );
 };
 
+export async function getServerSideProps() {
+  try {
+    const response = await fetch("/api/limits"); // Change this to your API endpoint
+    if (response.ok) {
+      const data = await response.json();
+      return {
+        props: {
+          descriptorLimits: data,
+        },
+      };
+    } else {
+      console.error("Error fetching descriptor limits");
+      return {
+        props: {
+          descriptorLimits: {},
+        },
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching descriptor limits:", error);
+    return {
+      props: {
+        descriptorLimits: {},
+      },
+    };
+  }
+}
+
 export default SearchByLipinski;

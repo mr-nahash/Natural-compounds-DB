@@ -1,14 +1,11 @@
 import MoleculeGallery from "@components/MolGallery";
 import { HomeCarousel } from "@components/WelcomeBox";
-import { PrismaClient } from "@prisma/client";
+import prisma from "prisma/client";
 import SidebarFilter from "@components/AdvanceSearch/SidebarFilter";
 
 export default async function Home() {
   const itemsPerPage = 10;
   
-  // Initialize a new instance of PrismaClient
-  const prisma = new PrismaClient();
-
   try {
     // Fetch data from the database
     const molecules = await prisma.active_compounds.findMany({});
