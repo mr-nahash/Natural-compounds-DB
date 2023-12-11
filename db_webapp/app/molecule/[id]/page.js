@@ -19,6 +19,7 @@ export default async function Page({ params }) {
           </div>
           <MoleculeRecord molecule={molecule} />
         </div>
+        
       </div>
     );
   } catch (error) {

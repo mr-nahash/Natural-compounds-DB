@@ -6,6 +6,7 @@ import {
   DocumentDuplicateIcon
 } from "@heroicons/react/24/solid";
 import "./styles/mol_records.css"
+import Image from "next/image";
 
 const MoleculeRecord = ({ molecule }) => {
   const [csvData, setCsvData] = useState(null);
@@ -13,10 +14,35 @@ const MoleculeRecord = ({ molecule }) => {
   
 
   useEffect(() => {
-    if (window.SmiDrawer) {
-      window.SmiDrawer.apply();
-    }
-  }, [molecule]);
+    const loadSmiDrawerScript = async () => {
+      // Check if SmiDrawer is already available in the global scope
+      if (window.SmiDrawer) {
+        // If SmiDrawer is available, apply it immediately
+        window.SmiDrawer.apply();
+      } else {
+        // If SmiDrawer is not available, dynamically create a script element
+        const script = document.createElement("script");
+
+        // Set the source URL of the script to the SmiDrawer library
+        script.src = "https://unpkg.com/smiles-drawer@2.0.1/dist/smiles-drawer.min.js";
+
+        // Set the async attribute to true to load the script asynchronously
+        script.async = true;
+
+        // Append the script element to the head of the document
+        document.head.appendChild(script);
+
+        // Set up an event handler for the script's onload event
+        script.onload = () => {
+          // Once the script is loaded, apply SmiDrawer
+          window.SmiDrawer.apply();
+        };
+      }
+    };
+
+    // Call the asynchronous function to load SmiDrawer script
+    loadSmiDrawerScript();
+  }, [molecules]);
 
   const generateCSV = () => {
     if (!molecule) {
@@ -66,7 +92,7 @@ const MoleculeRecord = ({ molecule }) => {
               <div className="legend">Download the molecule data in CSV format.</div>
             )}
             </ArrowDownOnSquareStackIcon>        
-        <img
+        <Image
           className="Molecule-image"
           data-smiles={molecule.structure.SMILES}
           data-smiles-options={JSON.stringify({ width: 500, height: 500 })}

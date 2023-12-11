@@ -19,6 +19,7 @@ export default function SearchByTanimoto() {
   const [isLoading, setIsLoading] = useState(false); // Add loading state
 
   useEffect(() => {
+
     const script = document.createElement('script');
     script.src = 'https://molsoft.com/lib/moledit.js';
     script.type = 'text/javascript';

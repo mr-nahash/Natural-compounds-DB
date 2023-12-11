@@ -1,15 +1,43 @@
+"use client";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import "./styles/mol_records.css"
+import Image from "next/image";
 
 
 const MoleculeInfo = ({molecules}) => {
-  useEffect(() => {
-    // Apply SMILES to image transformation code whenever page changes
-    if (window.SmiDrawer) {
-      window.SmiDrawer.apply();
-    }
-  }, [molecules]);
+    useEffect(() => {
+      // Define an asynchronous function to load the SmiDrawer script
+      const loadSmiDrawerScript = async () => {
+        // Check if SmiDrawer is already available in the global scope
+        if (window.SmiDrawer) {
+          // If SmiDrawer is available, apply it immediately
+          window.SmiDrawer.apply();
+        } else {
+          // If SmiDrawer is not available, dynamically create a script element
+          const script = document.createElement("script");
+  
+          // Set the source URL of the script to the SmiDrawer library
+          script.src = "https://unpkg.com/smiles-drawer@2.0.1/dist/smiles-drawer.min.js";
+  
+          // Set the async attribute to true to load the script asynchronously
+          script.async = true;
+  
+          // Append the script element to the head of the document
+          document.head.appendChild(script);
+  
+          // Set up an event handler for the script's onload event
+          script.onload = () => {
+            // Once the script is loaded, apply SmiDrawer
+            window.SmiDrawer.apply();
+          };
+        }
+      };
+  
+      // Call the asynchronous function to load SmiDrawer script
+      loadSmiDrawerScript();
+    }, [molecules]);
+  
 
   return (
     <>
@@ -22,7 +50,7 @@ const MoleculeInfo = ({molecules}) => {
             return (
               <Link key={molecule.id} href={`/molecule/${molecule.id}`}>
                 <div className="grid grid-cols-2 mx-3 p-1 my-1 ml-5 rounded-xl border-[1px] border-zinc-600 bg-white shadow-white">
-                    <img
+                    <Image
                       data-smiles={molecule.structure.SMILES}
                       data-smiles-options={JSON.stringify({ width: 500, height: 500 })}
                       alt="Molecule"
@@ -63,7 +91,7 @@ const MoleculeInfo = ({molecules}) => {
               <Link key={molecule.id} href={`/molecule/${molecule.id}`}>
                 <div className="grid grid-cols-2 mx-3 p-3 my-1 rounded-xl border-[1px] border-zinc-600 bg-white shadow-white">
                  
-                    <img
+                    <Image
                       data-smiles={molecule.structure.SMILES}
                       data-smiles-options={JSON.stringify({ width: 500, height: 500 })}
                       alt="Molecule"
@@ -88,8 +116,10 @@ const MoleculeInfo = ({molecules}) => {
               <div key={item.id || "invalid"}>Invalid data structure</div>
             );
           }
+          
         })}
     </>
+    
   );
 };
 

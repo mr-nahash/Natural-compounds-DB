@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Carousel, Typography, Button } from "@material-tailwind/react";
+import Image from "next/image";
 
 export function HomeCarousel() {
   const [index, setIndex] = useState(0);
