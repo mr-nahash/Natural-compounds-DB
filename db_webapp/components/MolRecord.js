@@ -42,7 +42,7 @@ const MoleculeRecord = ({ molecule }) => {
 
     // Call the asynchronous function to load SmiDrawer script
     loadSmiDrawerScript();
-  }, [molecules]);
+  }, [molecule]);
 
   const generateCSV = () => {
     if (!molecule) {
