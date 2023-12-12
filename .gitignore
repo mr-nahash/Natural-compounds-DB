@@ -33,3 +33,4 @@ db_webapp/.vercel
 # typescript
 db_webapp/*.tsbuildinfo
 db_webapp/next-env.d.ts
+.vercel
