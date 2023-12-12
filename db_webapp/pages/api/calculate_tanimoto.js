@@ -22,15 +22,25 @@ export default async function handler(req, res) {
       });
 
       // Create a temporary file to store the JSON data
-      const tempFilePath = path.join(__dirname, 'temp.json');
+      //const tempFilePath = path.join(__dirname, 'temp.json');
+      // get the current working directory and then construct the file path accordingly:
+      const tempFilePath = path.join(process.cwd(), 'temp.json');
+
       fs.writeFileSync(tempFilePath, JSON.stringify(databaseFingerprints));
 
-      // Spawn the Python script and pass the path to the temporary file as an argument
-      const pythonProcess = spawn('python', [
-        'python_scripts\\tanimoto_table.py',
-        smiles,
-        tempFilePath, // Pass the path to the temporary JSON file
-      ]);
+      
+      //Instead of hardcoding the path separator, use the path.join method 
+      //to create paths in a cross-platform way:
+      const pythonScriptPath = path.join('python_scripts', 'tanimoto_table.py');
+
+      const pythonProcess = spawn('python', [pythonScriptPath, smiles, tempFilePath]);
+      
+      pythonProcess.on('error', (err) => {
+        console.error('Error in spawn process:', err);
+        reject(err);
+      });
+      
+
 
       console.log('Python script execution started...');
 
