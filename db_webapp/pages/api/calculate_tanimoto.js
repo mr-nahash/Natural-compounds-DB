@@ -27,8 +27,7 @@ export default async function handler(req, res) {
       // Create a temporary file to store the JSON data
       //const tempFilePath = path.join(__dirname, 'temp.json');
       // get the current working directory and then construct the file path accordingly:
-      const tempFilePath = path.join(process.cwd(), 'temp.json');
-
+      const tempFilePath = path.join('/tmp', 'temp.json');
       fs.writeFileSync(tempFilePath, JSON.stringify(databaseFingerprints));
 
       
@@ -37,8 +36,9 @@ export default async function handler(req, res) {
       
       const pythonScriptPath = path.join('python_scripts', 'tanimoto_table.py');
       console.log('Python script execution started...');
+      
+      const pythonProcess = spawn('python', [pythonScriptPath, smiles], { input: JSON.stringify(databaseFingerprints) });
 
-      const pythonProcess = spawn('python', [pythonScriptPath, smiles, tempFilePath]);
       console.log('Python script process created:', pythonProcess);
       
       pythonProcess.on('error', (err) => {
