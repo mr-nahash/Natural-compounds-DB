@@ -58,8 +58,9 @@ export default async function handler(req, res) {
 
       // Create a promise to await the child process completion
       const processPromise = new Promise((resolve, reject) => {
-        console.log('Python script process closed with code:', code);
+        
         pythonProcess.on('close', async (code) => {
+          console.log('Python script process closed with code:', code);
           if (code === 0) {
             // Successfully calculated tanimoto score
             try {
