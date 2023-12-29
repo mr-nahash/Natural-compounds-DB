@@ -25,9 +25,8 @@ export default async function handler(req, res) {
       console.log('Database fingerprints fetched:', databaseFingerprints);
 
       // Create a temporary file to store the JSON data
-      //const tempFilePath = path.join(__dirname, 'temp.json');
-      // get the current working directory and then construct the file path accordingly:
       const tempFilePath = path.join('/tmp', 'temp.json');
+            // get the current working directory and then construct the file path accordingly:
       fs.writeFileSync(tempFilePath, JSON.stringify(databaseFingerprints));
 
       
@@ -35,18 +34,12 @@ export default async function handler(req, res) {
       //to create paths in a cross-platform way:
       
       const pythonScriptPath = path.join('python_scripts', 'tanimoto_table.py');
-      console.log('Python script execution started...');
       
+      const {spawn} = require('child_process');
       const pythonProcess = spawn('python', [pythonScriptPath, smiles], { input: JSON.stringify(databaseFingerprints) });
 
       console.log('Python script process created:', pythonProcess);
-      
-      pythonProcess.on('error', (err) => {
-        console.error('Error in spawn process:', err);
-        reject(err);
-      });
-      
-
+  
 
       console.log('Python script execution started...');
 
@@ -102,6 +95,10 @@ export default async function handler(req, res) {
             // Error occurred in the Python script
             reject(new Error('tanimoto score failed'));
           }
+        });
+        pythonProcess.on('error', (err) => {
+          console.error('Error in spawn process:', err);
+          reject(err);
         });
       });
 
