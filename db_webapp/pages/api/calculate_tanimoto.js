@@ -4,8 +4,10 @@ import path from 'path';
 import { spawn } from 'child_process';
 
 export default async function handler(req, res) {
+  console.log('Handler function started...');
   if (req.method === 'POST') {
     try {
+      console.log('Handler function completed successfully.');
       const { smiles } = req.body;
 
       // Fetch database fingerprints from the Prisma client
@@ -20,6 +22,7 @@ export default async function handler(req, res) {
           },
         },
       });
+      console.log('Database fingerprints fetched:', databaseFingerprints);
 
       // Create a temporary file to store the JSON data
       //const tempFilePath = path.join(__dirname, 'temp.json');
@@ -31,9 +34,12 @@ export default async function handler(req, res) {
       
       //Instead of hardcoding the path separator, use the path.join method 
       //to create paths in a cross-platform way:
+      
       const pythonScriptPath = path.join('python_scripts', 'tanimoto_table.py');
+      console.log('Python script execution started...');
 
       const pythonProcess = spawn('python', [pythonScriptPath, smiles, tempFilePath]);
+      console.log('Python script process created:', pythonProcess);
       
       pythonProcess.on('error', (err) => {
         console.error('Error in spawn process:', err);
@@ -52,10 +58,12 @@ export default async function handler(req, res) {
 
       // Create a promise to await the child process completion
       const processPromise = new Promise((resolve, reject) => {
+        console.log('Python script process closed with code:', code);
         pythonProcess.on('close', async (code) => {
           if (code === 0) {
             // Successfully calculated tanimoto score
             try {
+              console.log('Tanimoto results received:', tanimoto);
               const tanimotoResults = JSON.parse(tanimoto);
               const moleculeIds = Object.keys(tanimotoResults);
 
@@ -67,6 +75,7 @@ export default async function handler(req, res) {
                   },
                 },
               });
+              console.log('Molecules retrieved from the database:', molecules);
 
               // Create a dictionary of molecules by ID for easier access
               const moleculesById = {};
@@ -98,6 +107,7 @@ export default async function handler(req, res) {
       // Wait for the child process to complete
       await processPromise;
     } catch (error) {
+      console.error('Handler function error:', error);
       res.status(500).json({ error: error.message });
     }
     finally {
@@ -105,6 +115,7 @@ export default async function handler(req, res) {
       await prisma.$disconnect();
     }
   } else {
+    console.warn('Handler function received an invalid HTTP method.');
     res.status(405).end(); // Method Not Allowed
   }
 }
