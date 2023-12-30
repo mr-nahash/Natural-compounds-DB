@@ -1,2 +1,2 @@
-Flask==2.2.2
-rdkit-pypi
+Flask==1.0.0
+rdkit==1.0.0
