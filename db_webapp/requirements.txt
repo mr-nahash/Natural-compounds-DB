@@ -1,2 +1,1 @@
-
-rdkit-Chem
+rdkit==2021.09.4
