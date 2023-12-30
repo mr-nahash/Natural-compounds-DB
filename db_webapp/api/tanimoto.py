@@ -1,10 +1,11 @@
-import prisma
 import json
 import subprocess
+from prisma import Prisma
+
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 # Prisma client initialization
-prisma_client = prisma.Prisma()  # Adjust connection details as needed
+prisma = Prisma # Adjust connection details as needed
 
 class RequestHandler(BaseHTTPRequestHandler):
     def _send_response(self, status_code, body):
@@ -22,7 +23,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             smiles = request_data.get('smiles')
 
             # Fetch database fingerprints
-            database_fingerprints = prisma_client.active_compounds.find_many(
+            database_fingerprints = prisma.active_compounds.find_many(
                 select={
                     'id': True,
                     'fingerprint': {
@@ -50,7 +51,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 molecule_ids = list(tanimoto_results.keys())
 
                 # Retrieve molecules from the database
-                molecules = prisma_client.active_compounds.find_many(
+                molecules = prisma.active_compounds.find_many(
                     where={
                         'id': {
                             'in_': molecule_ids
