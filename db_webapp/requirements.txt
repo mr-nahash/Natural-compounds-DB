@@ -1,1 +1,1 @@
-Pybel==0.15.5
+openbabel
