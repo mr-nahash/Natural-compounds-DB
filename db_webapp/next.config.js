@@ -24,8 +24,4 @@ const nextConfig = {
   }
 };
 
-module.exports = {
-  experimental: {
-    optimizePackageImports: ['rdkit'],
-  },
-}
+module.exports = nextConfig;
