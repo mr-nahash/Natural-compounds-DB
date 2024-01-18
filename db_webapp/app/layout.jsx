@@ -16,8 +16,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <title>BIOMX DB</title>
+
       </head>
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col">
         <div className="flex-shrink-0">
           <NavBar />
         </div>

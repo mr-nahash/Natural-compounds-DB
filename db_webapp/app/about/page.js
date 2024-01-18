@@ -13,6 +13,7 @@ import {
 
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { BiomxDBTimeline } from "@components/AboutTheProyect/TimeLine";
+import { DefaultTimeline } from "@components/AboutTheProyect/BulletPointTimeLine";
 
 const About = () => {
   const [open, setOpen] = React.useState(0);
@@ -26,9 +27,23 @@ const About = () => {
   };
 
   return (
-    <div>
+    <div className="flex-self-center overflow-y-auto h-auto">
+    
+    <BiomxDBTimeline></BiomxDBTimeline>
+      <Card className="mx-20 relative z-auto p-52">
+        <DefaultTimeline></DefaultTimeline>  
         
-      <div className="grid grid-rows-2" style={{ gridTemplateRows: '500px 1fr' }}>
+
+      </Card>    
+      <div className="grid grid-rows-2">
+      
+      
+        <Card className="flex-col relative z-20 py-20">
+          
+          
+        </Card> 
+      
+        
         <Card className="max-w-full flex-col gap-2 lg:flex-row lg:items-center lg:gap-6">
               <div className="mb-2 p-4 self-center">
                 <Typography variant="h5" color="blue-gray">
@@ -163,11 +178,6 @@ const About = () => {
                   </ListItem>
                 </Accordion>
               </List>
-        </Card>
-        <Card className="max-w-full h-4 w-4 lg:flex-row lg:items-center lg:gap-6 ">
-            <BiomxDBTimeline></BiomxDBTimeline>  
-
-               
         </Card>
 
         </div>

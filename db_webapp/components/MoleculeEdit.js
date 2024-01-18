@@ -1,5 +1,8 @@
 // Import the necessary dependencies
+"use client";
 import React, { useEffect, useRef, useState } from 'react';
+import initRDKitModule from '@public/rdkit/RDKit_minimal';
+
 import { Button } from '@material-tailwind/react';
 import {
   CloudArrowUpIcon,
@@ -18,6 +21,36 @@ export default function SearchByTanimoto() {
   const [molecules, setMolecules] = useState([]);
   const [isLoading, setIsLoading] = useState(false); // Add loading state
 
+  
+
+  useEffect(() => {
+    const initRDKIT = async () => {
+      try {
+        const rdkitInstance = await initRDKitModule();
+        console.log('version: ' + rdkitInstance.version());
+        processChemicalInfo(rdkitInstance);
+      } catch (error) {
+        console.error('Error initializing RDKit:', error);
+      }
+    };
+
+    const processChemicalInfo = async (rdkitInstance, smiles) => {
+      try {
+        const mol = rdkitInstance.get_mol(smiles);
+        const val = mol.get_morgan_fp();
+        console.log(val);
+        return val;
+      } catch (error) {
+        console.error('Error processing chemical info:', error);
+        throw error;
+      }
+    };
+
+    initRDKIT();
+  }, []);
+
+  
+
   useEffect(() => {
 
     const script = document.createElement('script');
@@ -34,15 +67,18 @@ export default function SearchByTanimoto() {
     return () => {
       document.body.removeChild(script);
     };
+
   }, []);
+
+  
 
   const calculateTanimoto = async (smiles) => {
     try {
       setIsLoading(true); // Set loading state to true
-      const response = await axios.post('/api/calculate_tanimoto', { smiles });
+      const response = await axios.post('/api/calculate_tanimoto_copy', { mg_fp });
       const tanimotoWithMolecules = response.data;
       setTanimotoWithMolecules(tanimotoWithMolecules);
-      console.log('Tanimoto data:',tanimotoWithMolecules);
+      console.log('Tanimoto data:', tanimotoWithMolecules);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -50,42 +86,45 @@ export default function SearchByTanimoto() {
     }
   };
 
-  const handleGetSmiles = () => {
+  const draw_to_smiles_to_mg_fp = async () => {
     if (editorRef.current) {
       const smiles = editorRef.current.getSmiles();
       console.log('SMILES:', smiles);
-      calculateTanimoto(smiles);
+      const mg_fp = await processChemicalInfo(rdkitInstance, smiles);
+      console.log('Morgan fingerprint:', mg_fp);
+      calculateTanimoto(mg_fp);
     }
   };
 
   return (
     <div className="grid grid-cols-3 gap-4 w-full h-full">
-    {/* Left Column */}
-    <div className="col-span-1">
-      <div id="myEditor" style={{ width: '100%', height: '100%', border: '2px solid gray' }}>
+      {/* Left Column */}
+      <div className="col-span-1">
+        <div id="myEditor" style={{ width: '100%', height: '100%', border: '2px solid gray' }}>
+        </div>
+        <div>
+
+        </div>
       </div>
-      <div>
-        <Button
-          variant="text"
-          className="flex items-center gap-2"
-          onClick={handleGetSmiles}
-        >
-          Search <ArrowLongRightIcon strokeWidth={2} className="h-5 w-5" />
-        </Button>
+      {/* Right Column */}
+      <Button
+        variant="text"
+        className="flex items-center gap-2"
+        onClick={draw_to_smiles_to_mg_fp}
+      >
+        Search <ArrowLongRightIcon strokeWidth={2} className="h-5 w-5" />
+      </Button>
+      <div className="col-span-2">
+        <div>
+          {isLoading ? (
+            // Render a loading indicator here if data is loading
+            <p>Loading...</p>
+          ) : tanimotoWithMolecules ? (
+            // Conditionally render the MoleculeGallery component when data is available
+            <MoleculeGallery data={tanimotoWithMolecules} itemsPerPage={itemsPerPage} />
+          ) : null}
+        </div>
       </div>
     </div>
-    {/* Right Column */}
-    <div className="col-span-2">
-    <div>
-        {isLoading ? (
-          // Render a loading indicator here if data is loading
-          <p>Loading...</p>
-        ) : tanimotoWithMolecules ? (
-          // Conditionally render the MoleculeGallery component when data is available
-          <MoleculeGallery data={tanimotoWithMolecules} itemsPerPage={itemsPerPage}/>
-        ) : null}
-      </div>
-    </div>
-  </div>
   );
 }

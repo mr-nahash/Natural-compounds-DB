@@ -1,5 +1,7 @@
 const CopyPlugin = require("copy-webpack-plugin");
-
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack(config, { isServer }) {
@@ -23,5 +25,5 @@ const nextConfig = {
     return config;
   }
 };
-
-module.exports = nextConfig;
+ 
+module.exports = withBundleAnalyzer(nextConfig)
