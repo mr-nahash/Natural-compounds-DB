@@ -32,6 +32,7 @@
     "tailwindcss": "3.3.2"
   },
   "devDependencies": {
+    "eslint": "^8.56.0",
     "prisma": "^5.7.1"
   }
 }
