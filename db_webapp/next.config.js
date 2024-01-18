@@ -8,10 +8,6 @@ const nextConfig = {
     config.plugins.push(
       new CopyPlugin({
         patterns: [
-          {
-            from: "node_modules/@rdkit/rdkit/dist/RDKit_minimal.wasm",
-            to: "static/chunks"
-          }
         ]
       })
     );
