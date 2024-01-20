@@ -6,7 +6,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    optimizePackageImports: ['@heroicons/react/24', '@material-tailwind/react'],
+    optimizePackageImports: ['heroicons/react/24', 'material-tailwind/react'],
   },
 };
 
