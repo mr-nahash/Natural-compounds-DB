@@ -12,8 +12,6 @@ import {
 } from "@material-tailwind/react";
 
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import { BiomxDBTimeline } from "@components/AboutTheProyect/TimeLine";
-import { DefaultTimeline } from "@components/AboutTheProyect/BulletPointTimeLine";
 
 const About = () => {
   const [open, setOpen] = React.useState(0);
@@ -28,22 +26,9 @@ const About = () => {
 
   return (
     <div className="flex-self-center overflow-y-auto h-auto">
-    
-    <BiomxDBTimeline></BiomxDBTimeline>
-      <Card className="mx-20 relative z-auto p-52">
-        <DefaultTimeline></DefaultTimeline>  
-        
-
-      </Card>    
+          
       <div className="grid grid-rows-2">
-      
-      
-        <Card className="flex-col relative z-20 py-20">
-          
-          
-        </Card> 
-      
-        
+    
         <Card className="max-w-full flex-col gap-2 lg:flex-row lg:items-center lg:gap-6">
               <div className="mb-2 p-4 self-center">
                 <Typography variant="h5" color="blue-gray">
@@ -81,6 +66,9 @@ const About = () => {
                   <AccordionBody className="py-1">
                     {open === 1 && (
                       <div className="overflow-y-auto max-h-[200px]">
+                      <Card className="mx-20 relative z-auto p-52">
+
+                      </Card>  
                         <p>BIOMX DB is proposed as an intuitive, web-based database, offering an array of advanced search, 
                       filtering, and download capabilities to address the existing limitations of the BIOFACQUIM dataset. 
                       This initiative aims to catalyze research endeavors and facilitate the dissemination of knowledge 

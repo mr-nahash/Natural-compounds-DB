@@ -8,7 +8,7 @@ import {
     Typography,
   } from "@material-tailwind/react";
    
-  export function DefaultTimeline() {
+  export function DifacquimTimeLine() {
     return (
       <div className="flex">
         <Timeline>
