@@ -34,3 +34,6 @@ db_webapp/.vercel
 db_webapp/*.tsbuildinfo
 db_webapp/next-env.d.ts
 .vercel
+
+#turbo
+db_webapp/.turbo
