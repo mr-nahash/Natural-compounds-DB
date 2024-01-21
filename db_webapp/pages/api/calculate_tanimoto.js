@@ -4,10 +4,8 @@ import path from 'path';
 import { spawn } from 'child_process';
 
 export default async function handler(req, res) {
-  console.log('Handler function started...');
   if (req.method === 'POST') {
     try {
-      console.log('Handler function completed successfully.');
       const { smiles } = req.body;
 
       // Fetch database fingerprints from the Prisma client
@@ -22,26 +20,27 @@ export default async function handler(req, res) {
           },
         },
       });
-      console.log('Database fingerprints fetched:', databaseFingerprints);
       
+      // Get the current working directory of the Node.js process
+      const projectRoot = process.cwd();
 
       // Create a temporary file to store the JSON data
-      const tempFilePath = path.join('/tmp', 'temp.json');
-            // get the current working directory and then construct the file path accordingly:
+      const tempFilePath = path.join(projectRoot, 'python_scripts/temp.json');
       fs.writeFileSync(tempFilePath, JSON.stringify(databaseFingerprints));
+      
+      // Log debugging information
+      console.log('Temporary file path:', tempFilePath);
+      
+      // Construct absolute path to Python script
+      const pythonScriptPath = path.join(projectRoot, 'python_scripts', 'tanimoto_table.py');
+      
+      const pythonExecutablePath = '/root/miniconda3/envs/rdkit_env/bin/python';
+
+      // Spawn the Python script and pass the path to the temporary file as an argument
+      const pythonProcess = spawn(pythonExecutablePath,[pythonScriptPath,smiles,tempFilePath, // Pass the path to the temporary JSON file
+]);
 
       
-      //Instead of hardcoding the path separator, use the path.join method 
-      //to create paths in a cross-platform way:
-      
-      const pythonScriptPath = path.join('python_scripts', 'tanimoto_table.py');
-      
-      const pythonProcess = spawn('python', [pythonScriptPath, smiles], { input: JSON.stringify(databaseFingerprints) });
-
-      console.log('Python script process created:', pythonProcess);
-  
-
-      console.log('Python script execution started...');
 
       let tanimoto = '';
 
@@ -51,13 +50,11 @@ export default async function handler(req, res) {
 
       // Create a promise to await the child process completion
       const processPromise = new Promise((resolve, reject) => {
-        
         pythonProcess.on('close', async (code) => {
-          console.log('Python script process closed with code:', code);
+          console.log('Python script execution started...',code);
           if (code === 0) {
             // Successfully calculated tanimoto score
             try {
-              console.log('Tanimoto results received:', tanimoto);
               const tanimotoResults = JSON.parse(tanimoto);
               const moleculeIds = Object.keys(tanimotoResults);
 
@@ -69,7 +66,6 @@ export default async function handler(req, res) {
                   },
                 },
               });
-              console.log('Molecules retrieved from the database:', molecules);
 
               // Create a dictionary of molecules by ID for easier access
               const moleculesById = {};
@@ -96,16 +92,11 @@ export default async function handler(req, res) {
             reject(new Error('tanimoto score failed'));
           }
         });
-        pythonProcess.on('error', (err) => {
-          console.error('Error in spawn process:', err);
-          reject(err);
-        });
       });
 
       // Wait for the child process to complete
       await processPromise;
     } catch (error) {
-      console.error('Handler function error:', error);
       res.status(500).json({ error: error.message });
     }
     finally {
@@ -113,7 +104,6 @@ export default async function handler(req, res) {
       await prisma.$disconnect();
     }
   } else {
-    console.warn('Handler function received an invalid HTTP method.');
     res.status(405).end(); // Method Not Allowed
   }
 }

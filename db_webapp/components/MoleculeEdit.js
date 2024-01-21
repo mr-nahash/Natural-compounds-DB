@@ -59,7 +59,7 @@ export default function SearchByTanimoto() {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-4 w-full h-full">
+    <div className="grid grid-cols-3 gap-4 w-full h-full p-10">
     {/* Left Column */}
     <div className="col-span-1">
       <div id="myEditor" style={{ width: '100%', height: '100%', border: '2px solid gray' }}>
@@ -67,7 +67,7 @@ export default function SearchByTanimoto() {
       <div>
         <Button
           variant="text"
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 relative"
           onClick={handleGetSmiles}
         >
           Search <ArrowLongRightIcon strokeWidth={2} className="h-5 w-5" />
