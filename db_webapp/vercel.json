@@ -3,8 +3,8 @@
       "api/helloWorldPython.py": {
         "memory": 1024,
         "maxDuration": 10,
-        "runtime": "python3.9",
-        "includeFiles": ["requirements.txt"]
+        "includeFiles": "./requirements.txt",
+        "excludeFiles": "**/node_modules/**"
       }
     }
   }
