@@ -96,6 +96,7 @@ const MoleculeRecord = ({ molecule }) => {
           data-smiles={molecule.structure.SMILES}
           data-smiles-options={JSON.stringify({ width: 500, height: 500 })}
           alt={`Molecule ${molecule.moleculeId}`}
+          priority 
         />
         
 
