@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { List, ListItem } from "@material-tailwind/react";
 import { Slider } from "@mui/material";
 import { Button } from "@material-tailwind/react";
-import {
-  CloudArrowUpIcon,
-  ArrowLongRightIcon,
-  ArrowPathIcon,
-  BookmarkIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 
-const SearchByLipinski = () => {
-  // Use the useRouter hook
+const SearchByLipinski = ({LipinskiLimits}) => {
   const router = useRouter();
-  const [descriptorLimits, setDescriptorLimits] = useState({});
   const [descriptorValues, setDescriptorValues] = useState({});
+
 
   const descriptors = [
     { var: "MW", label: "Molecular Weight", marks: null },
@@ -25,44 +19,26 @@ const SearchByLipinski = () => {
     { var: "RB", label: "Rotable Bonds", marks: true },
   ];
 
-  // Function to assign default values to untouched sliders
   const assignDefaultValuesToUntouchedSliders = () => {
     const defaultValues = {};
     descriptors.forEach((descriptor) => {
-      if (!descriptorValues[descriptor.var]) {
-        defaultValues[descriptor.var] = [
-          descriptorLimits[descriptor.var]?.min || 0,
-          descriptorLimits[descriptor.var]?.max || 100,
-        ];
-      }
+      defaultValues[descriptor.var] = [
+        LipinskiLimits?.[descriptor.var]?.min || 0,
+        LipinskiLimits?.[descriptor.var]?.max || 100,
+      ];
     });
-    setDescriptorValues((prevValues) => ({
-      ...prevValues,
-      ...defaultValues,
-    }));
+    setDescriptorValues(defaultValues);
   };
 
-  // Fetch lipinski descriptors by retrieving information from the api/limits API
+
   useEffect(() => {
-    const fetchDescriptorLimits = async () => {
-      try {
-        const response = await fetch("/api/limits"); // Change this to your API endpoint
-        if (response.ok) {
-          const data = await response.json();
-          setDescriptorLimits(data);
-          assignDefaultValuesToUntouchedSliders(); // Call this function when limits are available
-        } else {
-          console.error("Error fetching descriptor limits");
-        }
-      } catch (error) {
-        console.error("Error fetching descriptor limits:", error);
-      }
-    };
+    if (!LipinskiLimits) {
+      fetchDataFromAPI();
+    } else {
+      assignDefaultValuesToUntouchedSliders();
+    }
+  }, [LipinskiLimits]);
 
-    fetchDescriptorLimits();
-  }, []);
-
-  // Function to update URL with slider parameters
   const updateURLWithSliderValues = () => {
     const queryParams = {};
     descriptors.forEach((descriptor) => {
@@ -73,11 +49,8 @@ const SearchByLipinski = () => {
           descriptorValues[descriptor.var][1];
       }
     });
-    // Create a new query object with the updated slider values
 
-    // Encode the query parameters
     const encodedQueryParams = new URLSearchParams(queryParams).toString();
-    // Push the updated query to the URL
     router.push(`/search?${encodedQueryParams}`);
   };
 
@@ -89,7 +62,6 @@ const SearchByLipinski = () => {
   };
 
   const handleSearch = () => {
-    // Call the function to update the URL with slider parameters
     updateURLWithSliderValues();
   };
 
@@ -101,28 +73,28 @@ const SearchByLipinski = () => {
             <p>{descriptor.label}</p>
             <div className="slider-container">
               <Slider
-                min={descriptorLimits[descriptor.var]?.min}
-                max={descriptorLimits[descriptor.var]?.max}
-                defaultValue={[descriptorLimits[descriptor.var]?.min, descriptorLimits[descriptor.var]?.max]}
-                
+                min={LipinskiLimits?.[descriptor.var]?.min}
+                max={LipinskiLimits?.[descriptor.var]?.max}
+                defaultValue={[
+                  LipinskiLimits?.[descriptor.var]?.min || 0,
+                  LipinskiLimits?.[descriptor.var]?.max || 100,
+                ]}
                 valueLabelDisplay="auto"
-                
                 value={
                   descriptorValues[descriptor.var] || [
-                    descriptorLimits[descriptor.var]?.min || 0,
-                    descriptorLimits[descriptor.var]?.max || 100,
+                    LipinskiLimits?.[descriptor.var]?.min || 0,
+                    LipinskiLimits?.[descriptor.var]?.max || 100,
                   ]
                 }
-                
                 onChange={(event, values) =>
                   handleSliderChange(descriptor.var, values)
                 }
               />
             </div>
-            {descriptorLimits[descriptor.var] && (
+            {LipinskiLimits?.[descriptor.var] && (
               <div className="flex justify-between bottom">
-                <p>{descriptorLimits[descriptor.var].min}</p>
-                <p>{descriptorLimits[descriptor.var].max}</p>
+                <p>{LipinskiLimits[descriptor.var].min}</p>
+                <p>{LipinskiLimits[descriptor.var].max}</p>
               </div>
             )}
           </div>
@@ -139,32 +111,5 @@ const SearchByLipinski = () => {
   );
 };
 
-export async function getServerSideProps() {
-  try {
-    const response = await fetch("/api/limits"); // Change this to your API endpoint
-    if (response.ok) {
-      const data = await response.json();
-      return {
-        props: {
-          descriptorLimits: data,
-        },
-      };
-    } else {
-      console.error("Error fetching descriptor limits");
-      return {
-        props: {
-          descriptorLimits: {},
-        },
-      };
-    }
-  } catch (error) {
-    console.error("Error fetching descriptor limits:", error);
-    return {
-      props: {
-        descriptorLimits: {},
-      },
-    };
-  }
-}
 
 export default SearchByLipinski;

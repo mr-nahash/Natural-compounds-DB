@@ -50,10 +50,10 @@ const MoleculeInfo = ({molecules}) => {
             return (
               <Link key={molecule.id} href={`/molecule/${molecule.id}`}>
                 <div className="grid grid-cols-2 mx-3 p-1 my-1 ml-5 rounded-xl border-[1px] border-zinc-600 bg-white shadow-white">
-                    <Image
+                    <img
                       data-smiles={molecule.structure.SMILES}
                       data-smiles-options={JSON.stringify({ width: 500, height: 500 })}
-                      alt="Molecule"
+                      alt="Molecule ${molecule}"
                     />
                   <div className="gap-0">
                     <div className="text-xl font-semibold">{molecule.name}</div>
@@ -91,7 +91,7 @@ const MoleculeInfo = ({molecules}) => {
               <Link key={molecule.id} href={`/molecule/${molecule.id}`}>
                 <div className="grid grid-cols-2 mx-3 p-3 my-1 rounded-xl border-[1px] border-zinc-600 bg-white shadow-white">
                  
-                    <Image
+                    <img
                       data-smiles={molecule.structure.SMILES}
                       data-smiles-options={JSON.stringify({ width: 500, height: 500 })}
                       alt="Molecule"

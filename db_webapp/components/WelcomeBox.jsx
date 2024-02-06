@@ -16,7 +16,7 @@ export function HomeCarousel() {
 
   return (
     <Carousel 
-    activeSlide={index} onChange={handleSlideChange}>
+    activeslide={index} onChange={handleSlideChange}>
     {imageUrls.map((imageUrl, index) => (
       <div
         key={index}

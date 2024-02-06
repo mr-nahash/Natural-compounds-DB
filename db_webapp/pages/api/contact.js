@@ -1,8 +1,8 @@
 // pages/api/contact.js
 require("dotenv").config();
+
 const dotenv = require("dotenv")
 dotenv.config();
-import axios from "axios";
 const nodemailer = require("nodemailer");
 
 export default async function handler(req, res) {
@@ -11,12 +11,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { email, subject, message } = req.body;
+    const { name, email, subject, message } = req.body;
 
     // Add your logic for sending emails here
     // Example: You can use a nodemailer library or another email service
     // Replace the following line with the appropriate logic for your use case
-    const response = await sendEmail(email, subject, message);
+    const response = await sendEmail(name, email, subject, message);
 
     res.status(200).json(response);
   } catch (error) {
@@ -25,11 +25,7 @@ export default async function handler(req, res) {
   }
 }
 
-async function sendEmail(email, subject, message) {
-  // Implement your email sending logic here
-  // Example using nodemailer
-  // Replace the following lines with the appropriate logic for your use case
-
+async function sendEmail(name, email, subject, message) {
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -41,9 +37,15 @@ async function sendEmail(email, subject, message) {
 
   const mailOptions = {
     from: email,
-    to: "317520668@gmail.com",
-    subject: subject,
-    text: message,
+    to: "fmtz.xviii@gmail.com",
+    subject: "BIOMX-DB: "+ subject,
+    html: `
+    <p>This email is auto-generated and forwarded from the site <strong>biomx-db.com</strong>. Please do not reply to this email.</p>
+    <p><strong>From:</strong> ${name}</p>
+    <p><strong>Message:</strong></p>
+    <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0;">${message}</div>
+    <p><strong>Email:</strong> ${email}</p>
+  `,
   };
 
   return await transporter.sendMail(mailOptions);

@@ -8,7 +8,7 @@ import {
   Typography,
   List,
   ListItem,
-  ListItemPrefix
+
 } from "@material-tailwind/react";
 
 import {ChevronDownIcon } from "@heroicons/react/24/outline";
@@ -27,11 +27,11 @@ const About = () => {
   };
 
   return (
-    <div className="flex-self-center overflow-y-auto h-auto">
-      <QuiltedImageList></QuiltedImageList>
-      <div className="grid grid-rows-2">
-        
-        <Card className="max-w-full flex-col gap-2 lg:flex-row lg:items-center lg:gap-6">
+    <div className="grid justify-center grid-cols-2" style={{ gridTemplateColumns: '600px 1fr' }}>
+      <div className="justify-center pl-20">
+          <QuiltedImageList></QuiltedImageList>
+      </div>
+        <Card className="max-w-full gap-2 lg:flex-row lg:items-center">
               <div className="mb-2 p-4 self-center">
                 <Typography variant="h5" color="blue-gray">
                   About the Proyect 
@@ -56,14 +56,13 @@ const About = () => {
                       onClick={() => handleOpen(1)}
                       className="border-b-0 p-3"
                     >
-                      <ListItemPrefix>
-                      </ListItemPrefix>
+
                       <Typography color="blue-gray" className="mr-auto font-normal">
                         The Need for BIOMX DB
                       </Typography>
                     </AccordionHeader>
                   </ListItem>
-                  <AccordionBody className="py-1 px-5">
+                  <AccordionBody className="py-1 px-5 overflow-y-auto h-auto">
                     {open === 1 && (
                       <div className="overflow-y-auto max-h-[200px]">
                         <p>BIOMX DB is proposed as an intuitive, web-based database, offering an array of advanced search, 
@@ -92,8 +91,7 @@ const About = () => {
                       onClick={() => handleOpen(2)}
                       className="border-b-0 p-3"
                     >
-                      <ListItemPrefix>
-                      </ListItemPrefix>
+
                       <Typography color="blue-gray" className="mr-auto font-normal">
                         Data provenance and content
                       </Typography>
@@ -140,8 +138,6 @@ const About = () => {
                       onClick={() => handleOpen(3)}
                       className="border-b-0 p-3"
                     >
-                      <ListItemPrefix>
-                      </ListItemPrefix>
                       <Typography color="blue-gray" className="mr-auto font-normal">
                         About the team
                       </Typography>
@@ -157,9 +153,8 @@ const About = () => {
                 
               </List>
         </Card>
-
-        </div>
-    </div>
+            
+      </div>
   );
 };
 

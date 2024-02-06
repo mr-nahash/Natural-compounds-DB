@@ -1,9 +1,10 @@
-//Import the PrismaClient constructor from the @prisma/client node module
-import prisma from "prisma/client";
+import { PrismaClient } from "@prisma/client";
 import MoleculeRecord from "@components/MolRecord";
 import SidebarFilter from "@components/AdvanceSearch/SidebarFilter";
 
 export default async function Page({ params }) {
+  const prisma = new PrismaClient(); // Corrected import
+
   try {
     const molecule = await prisma.active_compounds.findUnique({
       where: {
@@ -19,13 +20,12 @@ export default async function Page({ params }) {
           </div>
           <MoleculeRecord molecule={molecule} />
         </div>
-        
       </div>
     );
   } catch (error) {
     console.error('Error fetching data:', error);
     // Handle the error as needed
-  }finally {
+  } finally {
     // Close the PrismaClient instance to release resources
     await prisma.$disconnect();
   }

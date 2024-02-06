@@ -5,6 +5,7 @@ import axios from "axios";
 
 export default function Contact_by_email() {
 
+  const [name, setName] = useState();
 const [email, setEmail] = useState();
 const [subject,setSubject] = useState();
 const [message, setMessage] = useState();
@@ -13,6 +14,7 @@ const [error, setError] = useState("");
 const sendMail = async () => {
     try {
       const response = await axios.post("/api/contact", {
+          name,
           email,
           subject,
           message,
@@ -38,8 +40,7 @@ const sendMail = async () => {
               Contact Us
             </h1>
             <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-              Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-              gentrify.
+              For any doubt related to the proyect, or collaboration please feel free to contact us.
             </p>
           </div>
           <div className="lg:w-1/2 md:w-2/3 mx-auto">
@@ -54,7 +55,7 @@ const sendMail = async () => {
                     id="name"
                     name="name"
                     className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                    onChange={(e)=>setEmail(e.target.value)}
+                    onChange={(e)=>setName(e.target.value)}
                   />
                 </div>
               </div>
@@ -67,11 +68,28 @@ const sendMail = async () => {
                     Email
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     id="email"
                     name="email"
                     className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="p-2 w-1/2">
+                <div className="relative">
+                  <label
+                    for="email"
+                    className="leading-7 text-sm text-gray-600"
+                  >
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    onChange={(e) => setSubject(e.target.value)}
                   />
                 </div>
               </div>
@@ -98,12 +116,7 @@ const sendMail = async () => {
                 </button>
               </div>
               <div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
-                <a className="text-indigo-500">example@email.com</a>
-                <p className="leading-normal my-5">
-                  49 Smith St.
-                  <br />
-                  Saint Cloud, MN 56301
-                </p>
+                
                 <span className="inline-flex">
                   <a className="text-gray-500">
                     <svg

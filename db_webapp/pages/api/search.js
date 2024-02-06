@@ -9,6 +9,7 @@ export default async function handler(req, res) {
       const {
         name,
         kingdom,
+        bioactivity,
         minMW,
         maxMW,
         minLogP,
@@ -29,10 +30,17 @@ export default async function handler(req, res) {
       const filter_name = {};
       const filter_origin = {};
       const filter_lipinski = {};
+      const filter_bioactivity ={};
 
       if (name) {
         filter_name.name = {
           contains: name,
+          mode: "insensitive",
+        };
+      }
+      if (bioactivity) {
+        filter_bioactivity.bioactivity = {
+          contains: bioactivity,
           mode: "insensitive",
         };
       }
@@ -47,6 +55,8 @@ export default async function handler(req, res) {
           },
         };
       }
+
+
       
       function isValidNumber(value) {
         return !isNaN(parseFloat(value)) && value !== null;
@@ -105,6 +115,7 @@ export default async function handler(req, res) {
           OR: [
             filter_name,
             filter_origin,
+            filter_bioactivity,
             {AND:[filter_lipinski]}
           ],
         },

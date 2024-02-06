@@ -31,16 +31,7 @@ export default function NavBar() {
           About The Proyect
         </Link>
       </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="#" className="flex items-center">
-          API
-        </a>
-      </Typography>
+      
       <Typography
         as="li"
         variant="small"
@@ -50,6 +41,16 @@ export default function NavBar() {
         <a href="#" className="flex items-center">
           Documentation
         </a>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="white"
+        className="p-1 font-normal"
+      >
+        <Link href="/contact" className="flex items-center">
+          Contact
+        </Link>
       </Typography>
     </ul>
   );

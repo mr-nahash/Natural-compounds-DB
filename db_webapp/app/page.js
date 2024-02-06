@@ -2,9 +2,10 @@ import MoleculeGallery from "@components/MolGallery";
 import { HomeCarousel } from "@components/WelcomeBox";
 import prisma from "prisma/client";
 import SidebarFilter from "@components/AdvanceSearch/SidebarFilter";
+import { Suspense } from "react";
 
-export default async function Home() {
-  const itemsPerPage = 10;
+export default async function Home({lipinskiLimits}) {
+  const itemsPerPage = 10;  
   
   try {
     // Fetch data from the database
@@ -19,9 +20,11 @@ export default async function Home() {
         <div>
           <div className="grid justify-center grid-cols-2" style={{ gridTemplateColumns: '600px 1fr' }}>
             <div className="justify-center py-6">
-              <SidebarFilter></SidebarFilter>
+              <Suspense><SidebarFilter/></Suspense>
+              
             </div>
-            <MoleculeGallery itemsPerPage={itemsPerPage} data={molecules} />
+            <Suspense><MoleculeGallery itemsPerPage={itemsPerPage} data={molecules} /></Suspense>
+            
           </div>
         </div>
       </div>
@@ -35,4 +38,5 @@ export default async function Home() {
     await prisma.$disconnect();
   }
 }
+
 

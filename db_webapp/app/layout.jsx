@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="flex flex-col">
         <div className="flex-shrink-0">
-          <NavBar />
+          <NavBar/>
         </div>
         <div className="flex-grow flex flex-col items-center max-w-full">
           {/* Your main content goes here */}

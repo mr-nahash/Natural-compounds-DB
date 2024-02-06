@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import SearchBar from "../SearchBar";
+import { useState,useEffect } from "react";
 
 
 import SearchByOrigin from "./byOrigin";
@@ -28,12 +29,67 @@ import {
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import SearchByBioactivity from "./byBioactivity";
 
 
 // ... (other imports)
 
 export default function SidebarFilter() {
   const [open, setOpen] = React.useState(0);
+  const [originOptions, setOriginOptions] = useState([]);
+  const [bioactivityOptions, setBioactivityOptions] = useState([]);
+  const [LipinskiLimits, setLipinskiLimits] = useState();
+
+
+  useEffect(() => {
+    const fetchOriginOptions = async () => {
+      try {
+        const response = await fetch("/api/originOptions");
+        if (response.ok) {
+          const data = await response.json();
+          setOriginOptions(data);
+        } else {
+          console.error("Error fetching origin options");
+        }
+      } catch (error) {
+        console.error("Error fetching origin options:", error);
+      }
+    };
+
+
+    const fetchBioactivityOptions = async () => {
+      try {
+        const response = await fetch("/api/optionsBioactivity"); // Change this to your API endpoint
+        if (response.ok) {
+          const data = await response.json();
+          setBioactivityOptions(data);
+        } else {
+          console.error("Error fetching origin options");
+        }
+      } catch (error) {
+        console.error("Error fetching origin options:", error);
+      }
+    };
+
+    const fetchLimitsLipinski = async () => {
+      try {
+        const response = await fetch("/api/limits");
+        if (response.ok) {
+          const data = await response.json();
+          setLipinskiLimits(data);
+        } else {
+          console.error("Error fetching descriptor limits");
+        }
+      } catch (error) {
+        console.error("Error fetching descriptor limits:", error);
+      }
+    }
+
+    fetchBioactivityOptions();
+    fetchOriginOptions();
+    fetchLimitsLipinski();
+
+  }, []);
 
   // Initialize as an empty object
   const handleOpen = (value) => {
@@ -81,7 +137,7 @@ export default function SidebarFilter() {
             {open === 1 && (
               <div className="overflow-y-auto max-h-[200px]">
                 <p>Search by kingdom</p>
-                <SearchByOrigin></SearchByOrigin>
+                <SearchByOrigin optionsData={originOptions}/>
               </div>
             )}
           </AccordionBody>
@@ -115,7 +171,7 @@ export default function SidebarFilter() {
             {open === 2 && (
               <div className="overflow-y-auto max-h-[200px]">
                 <p>Search by Bioactivity</p>
-                <SearchByOrigin></SearchByOrigin>
+                <SearchByBioactivity optionsData={bioactivityOptions}/>
               </div>
             )}
           </AccordionBody>
@@ -148,7 +204,7 @@ export default function SidebarFilter() {
           <AccordionBody className="py-0">
             {open === 3 && (
               <div className="overflow-y-auto h-auto">
-                <SearchByLipinski></SearchByLipinski>
+                <SearchByLipinski LipinskiLimits={LipinskiLimits}/>
               </div>
             )}
           </AccordionBody>
