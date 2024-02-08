@@ -9,30 +9,20 @@ import {
 import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 
-const SearchByOrigin = ({optionsData}) => {
+const SearchByOrigin = ({ optionsData }) => {
   const router = useRouter();
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const handleSearch = () => {
-    const query = selectedOptions.join(',');
-    const encodedQuery = encodeURI(query);
-
-    // Update the URL
-    router.push(`/search?kingdom=${encodedQuery}`);
+    if (selectedOption) {
+      const encodedQuery = encodeURI(selectedOption);
+      // Update the URL
+      router.push(`/search?kingdom=${encodedQuery}`);
+    }
   };
 
   const handleCheckboxChange = (option) => {
-    const updatedOptions = [...selectedOptions];
-
-    // Toggle the selected state
-    if (updatedOptions.includes(option)) {
-      updatedOptions.splice(updatedOptions.indexOf(option), 1);
-    } else {
-      updatedOptions.push(option);
-    }
-
-    setSelectedOptions(updatedOptions);
+    setSelectedOption(option === selectedOption ? null : option);
   };
 
   return (
@@ -42,6 +32,7 @@ const SearchByOrigin = ({optionsData}) => {
           <ListItemPrefix>
             <Checkbox
               label={option}
+              checked={option === selectedOption}
               onChange={() => handleCheckboxChange(option)}
             />
           </ListItemPrefix>

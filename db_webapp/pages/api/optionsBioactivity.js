@@ -24,12 +24,14 @@ async function fetchBioactivityOptions() {
   
       // Split each bioactivity option into words
       const bioactivityWords = allCompounds
-        .flatMap(compound => compound.bioactivity ? compound.bioactivity.split(' ') : [])
-        .filter(word => word !== null && word !== undefined && word !== '');
-  
-      // Deduplicate and return the result
-      const uniqueBioactivity = Array.from(new Set(bioactivityWords));
+      .flatMap(compound => compound.bioactivity ? compound.bioactivity.split(' ') : [])
+      .filter(word => word !== null && word !== undefined && word !== '');
+
+      // Deduplicate and sort the result alphabetically
+      const uniqueBioactivity = Array.from(new Set(bioactivityWords)).sort();
+
       return uniqueBioactivity;
+      
     } catch (error) {
       console.error('Error fetching kingdom options:', error);
       throw error;

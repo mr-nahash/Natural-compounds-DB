@@ -54,7 +54,7 @@ const MoleculeRecord = ({ molecule }) => {
       origin: { kingdom, genus, species },
       moleculeId,
       metadata: { journal, reference, year, doi },
-      location: { state, site },
+      location: { mxState, location },
       bioactivity,
       lipinski,
     } = molecule;
@@ -106,7 +106,7 @@ const MoleculeRecord = ({ molecule }) => {
         </div>
         <div className="Molecule-info-row">
           <div className="Molecule-info-label">Chemical Formula</div>
-          <div className="Molecule-info-value">CxHxOx</div>
+          <div className="Molecule-info-value">{molecule.lipinski.MolFormula}</div>
         </div>
         <div className="Molecule-info-row">
           <div className="Molecule-info-label">Molecular Weight</div>
@@ -178,11 +178,11 @@ const MoleculeRecord = ({ molecule }) => {
         </div>
         <div className="Molecule-details-row">
           <div className="Molecule-details-label indent-10">Mexican State:</div>
-          <div className="Molecule-details-value">{molecule.location.state}</div>
+          <div className="Molecule-details-value">{molecule.location.mxState}</div>
         </div>
         <div className="Molecule-details-row">
-          <div className="Molecule-details-label indent-10">Site:</div>
-          <div className="Molecule-details-value">{molecule.location.site}</div>
+          <div className="Molecule-details-label indent-10">Location:</div>
+          <div className="Molecule-details-value">{molecule.location.location}</div>
         </div>
         <div className="Molecule-details-row">
           <div className="Molecule-details-label">First Report</div>
@@ -206,8 +206,6 @@ const MoleculeRecord = ({ molecule }) => {
         </div>
       </div>
     </div> 
-
-      
           );
         };
         

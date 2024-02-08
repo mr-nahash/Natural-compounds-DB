@@ -56,7 +56,8 @@ const MoleculeInfo = ({molecules}) => {
                       alt="Molecule ${molecule}"
                     />
                   <div className="gap-0">
-                    <div className="text-xl font-semibold">{molecule.name}</div>
+                  <div className="text-xl font-semibold" style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                      {molecule.name}</div>
                   <div className="Molecule-details-row">
                     <div className="Molecule-details-label">Tanimoto</div>
                     <div className="Molecule-details-value">{item.tanimoto}</div>

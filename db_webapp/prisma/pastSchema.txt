@@ -7,23 +7,37 @@ datasource db {
   url      = env("MONGODB_URI")
 }
 
+type ActiveCompoundsActivity {
+  activity_1 String?
+  activity_2 String?
+  activity_3 String?
+  activity_4 String?
+  activity_5 String?
+  activity_6 String?
+  ic50_1     String?
+  ic50_2     String?
+  ic50_3     String?
+  ic50_4     String?
+  ic50_5     String?
+  ic50_6     String?
+}
+
 type ActiveCompoundsFingerprint {
   MACCS String
 }
 
 type ActiveCompoundsLipinski {
-  HBA        Int
-  HBD        Int
-  LogP       Float
-  MW         Float
-  MolFormula String
-  RB         Int
-  TPSA       Float
+  HBA  Int
+  HBD  Int
+  LogP Float
+  MW   Float
+  RB   Int
+  TPSA Float
 }
 
 type ActiveCompoundsLocation {
-  location String
-  mxState  String
+  site  String
+  state String
 }
 
 type ActiveCompoundsMetadata {
@@ -41,6 +55,7 @@ type ActiveCompoundsOrigin {
 
 type ActiveCompoundsStructure {
   SMILES String
+  idCode String?
 }
 
 model SearchQuery {
@@ -50,6 +65,7 @@ model SearchQuery {
 
 model active_compounds {
   id          String                     @id @default(auto()) @map("_id") @db.ObjectId
+  activity    ActiveCompoundsActivity
   bioactivity String?
   fingerprint ActiveCompoundsFingerprint
   lipinski    ActiveCompoundsLipinski
