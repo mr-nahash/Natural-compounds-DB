@@ -44,12 +44,7 @@ export function HomeCarousel() {
               Welcome to BIOMX DB, a curated Mexican Natural Products Database. Composed by 605 compounds coming from 
               plants, fungi and even animals.
             </Typography>
-            <div className=" justify-center gap-2">
-              <Button size="lg" color="white" href="/about">
-                About the proyect
-              </Button>
-
-            </div>
+           
           </div>
         </div>
         

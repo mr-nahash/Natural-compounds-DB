@@ -129,7 +129,7 @@ export default function SidebarFilter() {
                 <MapPinIcon className="h-5 w-5" />
               </ListItemPrefix>
               <Typography color="blue-gray" className="mr-auto font-normal">
-                Origin
+                Source of NP
               </Typography>
             </AccordionHeader>
           </ListItem>
@@ -163,7 +163,7 @@ export default function SidebarFilter() {
                 <ExclamationTriangleIcon className="h-5 w-5" />
               </ListItemPrefix>
               <Typography color="blue-gray" className="mr-auto font-normal">
-                Bioactivity
+               Potential Bioactivity
               </Typography>
             </AccordionHeader>
           </ListItem>

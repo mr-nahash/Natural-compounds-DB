@@ -3,6 +3,8 @@ import { HomeCarousel } from "@components/WelcomeBox";
 import prisma from "prisma/client";
 import SidebarFilter from "@components/AdvanceSearch/SidebarFilter";
 import { Suspense } from "react";
+import GetAllDBButton from "@components/CompleteDownload";
+
 
 export default async function Home({lipinskiLimits}) {
   const itemsPerPage = 10;  
@@ -20,7 +22,8 @@ export default async function Home({lipinskiLimits}) {
         <div>
           <div className="grid justify-center grid-cols-2" style={{ gridTemplateColumns: '600px 1fr' }}>
             <div className="justify-center py-6">
-              <Suspense><SidebarFilter/></Suspense>
+            <Suspense><GetAllDBButton/></Suspense>
+            <Suspense><SidebarFilter/></Suspense>
               
             </div>
             <Suspense><MoleculeGallery itemsPerPage={itemsPerPage} data={molecules} /></Suspense>

@@ -38,9 +38,10 @@ export default function NavBar() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
+        <Link href="/documentation" className="flex items-center">
           Documentation
-        </a>
+        </Link>
+
       </Typography>
       <Typography
         as="li"

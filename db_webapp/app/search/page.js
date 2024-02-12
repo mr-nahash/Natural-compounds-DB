@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, lazy } from "react";
 import Spinner from "./Spinner";
 import useSWR from "swr";
-
+import React from "react";
 const SidebarFilter = lazy(() => import("@components/AdvanceSearch/SidebarFilter"));
 const MoleculeGallery = lazy(() => import("@components/MolGallery"));
 
@@ -49,6 +49,7 @@ const SearchPageContent = () => {
     maxRB: search.get("maxRB"),
   };
 
+
   const queryParams = Object.entries(queryParameters)
     .map(([param, value]) => `${param}=${encodeURI(value)}`)
     .join("&");
@@ -88,13 +89,63 @@ const SearchPageContent = () => {
     return <div>Error fetching data</div>;
   }
 
+  const getSearchDescription = (queryParameters) => {
+    const searchDescriptions = [];
+  
+    // Add individual parameters
+    if (queryParameters.name) {
+      searchDescriptions.push(`name: ${queryParameters.name}`);
+    }
+    if (queryParameters.kingdom) {
+      searchDescriptions.push(`kingdom: ${queryParameters.kingdom}`);
+    }
+    if (queryParameters.bioactivity) {
+      searchDescriptions.push(`bioactivity: ${queryParameters.bioactivity}`);
+    }
+    // Add other non-range parameters in a similar manner
+  
+    // Add 'min' and 'max' parameters
+    const rangeParameters = {
+      MW: 'molecular weight',
+      LogP: 'LogP',
+      HBD: 'hydrogen bond donors',
+      HBA: 'hydrogen bond acceptors',
+      TPSA: 'topological polar surface area',
+      RB: 'rotatable bonds',
+    };
+  
+    Object.entries(rangeParameters).forEach(([param, description]) => {
+      const minParam = `min${param}`;
+      const maxParam = `max${param}`;
+      
+      if (queryParameters[minParam] && queryParameters[maxParam]) {
+        searchDescriptions.push(<div key={param}>{`${description}: ${queryParameters[minParam]} to ${queryParameters[maxParam]}`}</div>);
+      } else if (queryParameters[minParam]) {
+        searchDescriptions.push(<div key={param}>{`${description} (min): ${queryParameters[minParam]}`}</div>);
+      } else if (queryParameters[maxParam]) {
+        searchDescriptions.push(<div key={param}>{`${description} (max): ${queryParameters[maxParam]}`}</div>);
+      }
+    });
+    
+    return (
+      <div className="flex-left">
+        {searchDescriptions.map((el, index) => (
+          <React.Fragment key={index}>
+            {el}
+            {index < searchDescriptions.length - 7 && <br style={{ lineHeight: 0.1 }} />}
+          </React.Fragment>
+        ))}
+      </div>
+    );  };
+  
+  const searchQueryMessage = getSearchDescription(queryParameters);
+
   return (
         <div>
         <div className="right-0 ml-80 pl-80 top-8 mt-20">
-          <span className="text-xl">
-            Showing results for:{" "}
-            <span className="font-semibold">{searchQuery}</span>
-          </span>
+        <span className="text-xl">
+         Results for {" "} <br></br> {searchQueryMessage}
+        </span>
         </div>
         <div className="grid justify-center grid-cols-2" style={{ gridTemplateColumns: '600px 1fr' }}>
           <div className="justify-center py-6 pl-8">
