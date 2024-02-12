@@ -61,7 +61,7 @@ export default function SearchByTanimoto() {
   return (
     <div className="grid grid-cols-3 gap-4 w-full h-full p-10">
     {/* Left Column */}
-    <div className="col-span-1">
+    <div className="col-span-1" style={{ height: '500px' }}>
       <div id="myEditor" style={{ width: '100%', height: '100%', border: '2px solid gray' }}>
       </div>
       <div>
