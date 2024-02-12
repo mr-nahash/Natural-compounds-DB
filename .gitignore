@@ -4,7 +4,7 @@
 db_webapp/node_modules
 db_webapp/.pnp
 db_webapp/.pnp.js
-
+.vscode
 # testing
 /coverage
 
