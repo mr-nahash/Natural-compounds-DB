@@ -28,7 +28,7 @@ export function HomeCarousel() {
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 grid h-full w-1/2 place-items-center bg-black/75">
-          <div className="w-3/4 text-center md:w-2/4 text-slate-50 pt-5">
+          <div className="w-3/4 text-center md:w-3/4 text-slate-50 pt-5">
             <Typography
               variant="4"
               color="white"
@@ -39,10 +39,9 @@ export function HomeCarousel() {
             <Typography
               variant="lead"
               color="white"
-              className="mb-12 opacity-80"
+              className="mb-12 opacity-80 text-xl"
             >
-              Welcome to BIOMX DB, a curated Mexican Natural Products Database. Composed by 605 compounds coming from 
-              plants, fungi and even animals.
+              Explore BIOMX DB, a curated Mexican Natural Products Database featuring a diverse collection of 605 compounds sourced from plants, fungi, marine organisms, and animals. Uncover the richness that Mexico has to offer.
             </Typography>
            
           </div>

@@ -56,31 +56,21 @@ const MoleculeInfo = ({molecules}) => {
                       alt="Molecule ${molecule}"
                     />
                   <div className="gap-0">
-                  <div className="text-xl font-semibold" style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                  <div className="text-xl font-semibold" style={{ overflow: 'hidden', whiteSpace: 'normal', textOverflow: 'ellipsis' }}>
                       {molecule.name}</div>
                   <div className="Molecule-details-row">
-                    <div className="Molecule-details-label">Tanimoto</div>
+                    <div className="Molecule-details-label">Tanimoto coefficient: </div>
                     <div className="Molecule-details-value">{item.tanimoto}</div>
                   </div>
-                  <div className="Molecule-details-row">
-                    <div className="Molecule-details-label">Origin</div>
-                    <div className="Molecule-details-value"></div>
-                  </div>
-                  <div className="Molecule-details-row">
-                    <div className="Molecule-details-label indent-10">Kingdom:</div>
-                    <div className="Molecule-details-value">{molecule.origin.kingdom}</div>
-                  </div>
-                  <div className="Molecule-details-row">
-                    <div className="Molecule-details-label indent-10">Genus:</div>
-                    <div className="Molecule-details-value">{molecule.origin.genus}</div>
-                  </div>
-                  <div className="Molecule-details-row">
-                    <div className="Molecule-details-label indent-10">Species:</div>
-                    <div className="Molecule-details-value">{molecule.origin.species}</div>
-                  </div>
-                    
-                    {/* Add other molecule properties as needed */}
-                  </div>
+                  <div className="text-m font-semibold" style={{ overflow: 'hidden', whiteSpace: 'normal', textOverflow: 'ellipsis' }}>{molecule.name}</div>
+                    <p></p>
+                    <div className="Molecule-details-label">Bioactivity:</div>
+                    <div className="Molecule-details-value indent-5">{molecule.bioactivity||"undiscovered"}</div>
+
+                    <div className="Molecule-details-label">Origin: </div>
+                    <div className="Molecule-details-value indent-5">{molecule.origin.kingdom}</div>
+                    <div className="Molecule-details-value indent-5">{molecule.origin.species}</div>
+                                      </div>
                 </div>
               </Link>
             );
@@ -90,7 +80,7 @@ const MoleculeInfo = ({molecules}) => {
 
             return (
               <Link key={molecule.id} href={`/molecule/${molecule.id}`}>
-                <div className="grid grid-cols-2 mx-3 p-3 my-1 rounded-xl border-[1px] border-zinc-600 bg-white shadow-white">
+                <div className="grid grid-cols-2 mx-3 my-1 p-3 my-1 rounded-xl border-[1px] border-zinc-600 bg-white shadow-white">
                  
                     <img
                       data-smiles={molecule.structure.SMILES}
@@ -98,7 +88,7 @@ const MoleculeInfo = ({molecules}) => {
                       alt="Molecule"
                     />
                   <div className="gap-2">
-                    <div className="text-xl font-semibold">{molecule.name}</div>
+                    <div className="text-m font-semibold" style={{ overflow: 'hidden', whiteSpace: 'normal', textOverflow: 'ellipsis' }}>{molecule.name}</div>
                     <p></p>
                     <div className="Molecule-details-label">Bioactivity:</div>
                     <div className="Molecule-details-value indent-5">{molecule.bioactivity||"undiscovered"}</div>

@@ -77,6 +77,7 @@ body {
 .Molecule-details-label {
   font-size: 14px;
   font-weight: bold;
+  margin-top: 5px;
 }
 
 .Molecule-details-value {
@@ -119,3 +120,22 @@ body {
 }
 
 
+/* styles.css */
+@keyframes verticalCarousel {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.image-list-container {
+  overflow: hidden;
+}
+
+.quilted-list {
+  display: flex;
+  flex-direction: column;
+  animation: verticalCarousel 10s linear infinite; /* Adjust the duration as needed */
+}

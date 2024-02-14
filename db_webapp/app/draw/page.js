@@ -1,4 +1,3 @@
-"use client";
 import SearchByTanimoto from "@components/MoleculeEdit";
 
 export default function MoleculeDraw() {

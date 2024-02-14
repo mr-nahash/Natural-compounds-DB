@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+"use client";
+// Import the necessary dependencies
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@material-tailwind/react';
-import {
-  ArrowLongRightIcon,
-} from '@heroicons/react/24/outline';
-import axios from 'axios'; // Import Axios for making HTTP requests
+import { ArrowLongRightIcon } from '@heroicons/react/24/outline';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import MoleculeGallery from './MolGallery';
 
 export default function SearchByTanimoto() {
@@ -11,29 +12,32 @@ export default function SearchByTanimoto() {
   const editorRef = useRef(null);
   const [tanimotoWithMolecules, setTanimotoWithMolecules] = useState('');
   const [error, setError] = useState('');
-  const [molecules, setMolecules] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     let editor = editorRef.current;
 
-    if (!editor) {
-      const script = document.createElement('script');
-      script.src = 'https://molsoft.com/lib/moledit.js';
-      script.type = 'text/javascript';
-      script.async = true;
-      script.onload = () => {
-        editor = new ChemicalView('c1ccccc1', 'myEditor');
-        document.moledit = editor;
-        editorRef.current = editor;
-      };
-      document.body.appendChild(script);
+    const script = document.createElement('script');
+    script.src = 'https://molsoft.com/lib/moledit.js';
+    script.type = 'text/javascript';
+    script.async = true;
 
-      return () => {
-        document.body.removeChild(script);
-      };
-    }
-  }, []);
+    script.onload = () => {
+      editor = new ChemicalView('c1ccccc1', 'myEditor');
+      document.moledit = editor;
+      editorRef.current = editor;
+    };
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, [router.pathname]); // Add router.pathname as a dependency
+
+
+
 
   const calculateTanimoto = async (smiles) => {
     try {

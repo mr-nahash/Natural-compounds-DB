@@ -28,7 +28,7 @@ export default function NavBar() {
         className="p-1 font-normal"
       >
         <Link href="/about" className="flex items-center">
-          About The Proyect
+          About The Project
         </Link>
       </Typography>
       

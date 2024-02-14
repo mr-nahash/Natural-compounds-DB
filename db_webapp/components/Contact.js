@@ -1,35 +1,57 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "tailwindcss/tailwind.css";
 import axios from "axios";
 
-export default function Contact_by_email() {
 
-  const [name, setName] = useState();
-const [email, setEmail] = useState();
-const [subject,setSubject] = useState();
-const [message, setMessage] = useState();
-const [error, setError] = useState(""); 
+export default function ContactByEmail() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-const sendMail = async () => {
+  useEffect(() => {
+    // Clear form fields after success message is displayed
+    const clearFormFields = () => {
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    };
+
+    if (successMessage) {
+      // Clear form fields after 3 seconds (adjust duration as needed)
+      const timeoutId = setTimeout(() => {
+        setSuccessMessage("");
+        clearFormFields();
+      }, 3000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [successMessage]);
+
+  const sendMail = async () => {
     try {
       const response = await axios.post("/api/contact", {
-          name,
-          email,
-          subject,
-          message,
+        name,
+        email,
+        subject,
+        message,
       });
 
       // Handle success
       console.log("Success:", response.data);
+      setSuccessMessage("Email sent successfully!");
+      setError(""); // Reset the error state
     } catch (error) {
       // Handle failure
       console.error("Failure:", error.message);
       setError("An error occurred while sending the email. Please try again.");
-
+      setSuccessMessage(""); // Reset the successMessage state
     }
   };
-
 
   return (
     <div>
@@ -54,8 +76,9 @@ const sendMail = async () => {
                     type="text"
                     id="name"
                     name="name"
+                    value={name}
                     className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                    onChange={(e)=>setName(e.target.value)}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
               </div>
@@ -71,6 +94,7 @@ const sendMail = async () => {
                     type="text"
                     id="email"
                     name="email"
+                    value={email}
                     className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -87,6 +111,7 @@ const sendMail = async () => {
                   <input
                     type="text"
                     id="subject"
+                    value={subject}
                     name="subject"
                     className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     onChange={(e) => setSubject(e.target.value)}
@@ -102,6 +127,7 @@ const sendMail = async () => {
                     Message
                   </label>
                   <textarea
+                    value={message}
                     id="message"
                     name="message"
                     className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
@@ -115,6 +141,11 @@ const sendMail = async () => {
                 Send Email
                 </button>
               </div>
+              {successMessage && (
+                <div className="p-2 w-full text-center text-green-500">
+                  {successMessage}
+                </div>
+              )}
               <div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
                 
                 <span className="inline-flex">

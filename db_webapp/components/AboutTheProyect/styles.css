@@ -1,0 +1,26 @@
+/* styles/globals.css */
+@keyframes verticalContinuousLoop {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    25%, 125% {
+      transform: translateY(-100%);
+    }
+    50%, 150% {
+      transform: translateY(-200%);
+    }
+    75%, 175% {
+      transform: translateY(-300%);
+    }
+  }
+  
+  .image-list-container {
+    overflow: hidden;
+  }
+  
+  .quilted-list {
+    display: flex;
+    flex-direction: column;
+    animation: verticalContinuousLoop 15s linear infinite; /* Adjust the duration as needed */
+  }
+  
