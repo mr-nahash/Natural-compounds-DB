@@ -33,8 +33,8 @@ const About = () => {
   };
 
   const profiles = [
-    { id: 1, name: "Fernando Martínez-Urrutia", title: "BIOMX-DB Software Developer", imgSrc: Profile_Fernando },
-    { id: 2, name: "Dr. Jose Luis Medina-Franco", title: "Project Supervisor", imgSrc: Profile_Medina },
+    { id: 1, name: "Fernando Martínez-Urrutia", title: "Lead Software Developer", subtitle:"Creator of BIOMX-DB", imgSrc: Profile_Fernando },
+    { id: 2, name: "Dr. Jose Luis Medina-Franco", title: "Director of DIFACQUIM Reasearch Group", subtitle:"Project Supervisor", imgSrc: Profile_Medina },
     // Add more profiles as needed
   ];
 
@@ -208,11 +208,11 @@ const About = () => {
                                           <div className="mt-2">
                                             <p className="font-semibold">{profile.name}</p>
                                             <p className="text-sm">{profile.title}</p>
+                                            <p className="text-s">{profile.subtitle}</p>
                                           </div>
                                         </div>
                                       ))}
                                     </div>
-                      
                       
                     )}
                   </AccordionBody>              
