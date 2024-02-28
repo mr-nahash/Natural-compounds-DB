@@ -34,7 +34,7 @@ export default async function handler(req, res) {
       // Construct absolute path to Python script
       const pythonScriptPath = path.join(projectRoot, 'python_scripts', 'tanimoto_table.py');
       
-      const pythonExecutablePath = '/root/miniconda3/envs/rdkit_env/bin/python';
+      const pythonExecutablePath = '/root/miniconda3/envs/my-rdkit-env/bin/python';
 
       // Spawn the Python script and pass the path to the temporary file as an argument
       const pythonProcess = spawn(pythonExecutablePath,[pythonScriptPath,smiles,tempFilePath, // Pass the path to the temporary JSON file
