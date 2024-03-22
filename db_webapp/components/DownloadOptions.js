@@ -1,4 +1,4 @@
-"use clien";
+"use client";
 import React from "react";
 import { ButtonGroup, Button, Card } from "@material-tailwind/react";
 
@@ -22,19 +22,28 @@ const OptionsDownloadButton=()=>{
 
 
     return(
-            <div className="relative flex justify-center w-max flex-col gap-4">
-                <ButtonGroup 
-                variant="outlined">
+      
+        <div>
+            <Card className='p-6 relative flex shadow-blue-gray-900/5'>  
+              <span style={{ marginRight: '10px', fontWeight: 'bold' }}>Download the database (605 molecules)</span>
+              <ButtonGroup 
+                fullWidth
+                variant="outlined"
+                size="md">
                     <Button
-                    className="p4"
                     onClick={csvDownload}
+                    className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+
                     >.csv</Button>
                     <Button
-                    className="p4"
+                    className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+
                     onClick={sdfDownload}
                     >.sdf</Button>
                 </ButtonGroup>
-            </div>        
+            </Card>
+        </div>
+        
     );
 };
 export default OptionsDownloadButton;

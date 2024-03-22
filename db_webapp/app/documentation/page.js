@@ -204,7 +204,7 @@ const Documentation = () => {
             Downloaded from: https://www.difacquim.com/d-databases/ <br></br>
             This dataset was enriched by calculating each molecule´s Lipinski and Berg Descriptors along with their corresponding fingerprints in the form of MACCS keys. The two-dimensional descriptors and the fingerprints were calculated using RDKit as it is described in the python library documentation
             Since MongoDB was chosen as a storage platform, and it stores documents in the form of keys and values, the entries of the CSV file had to be transformed into JSON objects. 
-            </p><br></br>
+            </p>
             <OptionsDownloadButton></OptionsDownloadButton>
         </Card>
 
