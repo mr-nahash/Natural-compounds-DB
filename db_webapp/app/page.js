@@ -3,7 +3,7 @@ import { HomeCarousel } from "@components/WelcomeBox";
 import prisma from "prisma/client";
 import SidebarFilter from "@components/AdvanceSearch/SidebarFilter";
 import { Suspense } from "react";
-import GetAllDBButton from "@components/CompleteDownload";
+import GetAllDBButton from "@components/DownloadCSV";
 
 
 export default async function Home({lipinskiLimits}) {
